@@ -8,15 +8,21 @@
 
 import UIKit
 
+
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TableViewDataSource {
     
     @IBOutlet weak var collectionView: UICollectionView!
-
-    var section = NSMutableDictionary()
+    @IBOutlet weak var menuButton: UIBarButtonItem!
+    var section = [String : [LNSourceTemporary]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if revealViewController() != nil {
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
         getSources()
     }
 
@@ -31,13 +37,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 self.createNSDictionary(sources){
                     bool in
+                    LNSection.sharedInstance.section = self.section
                     for(key, value) in self.section {
-                        print("Key: \(key as! String)")
-                        let sources = value as! [LNSourceTemporary]
+                        print("Key: \(key)")
+                        let sources = value
                         for x in sources {
                             print("Value: \(x.name)")
                         }
                     }
+                    
                     self.collectionView.reloadData()
                 }
             }
@@ -45,16 +53,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    
     //MARK: Create NSDictionary for sections
     func createNSDictionary(sources: [LNSourceTemporary], onCompletion: (Bool) -> Void) {
         for x in sources {
             let currentCategory = x.category
             if section[currentCategory] == nil {
-                let array = NSMutableArray()
+                let array = [LNSourceTemporary]()
                 section[currentCategory] = array
             }
-            if let array = section[currentCategory] as? NSMutableArray{
-                array.addObject(x)
+            if var array = section[currentCategory] {
+                array.append(x)
+                //Looks like Apple considers this a "known issue" in Swift, implying it will work as expected eventually. From the Xcode 6 Beta 4 release notes:
+                section[currentCategory] = array
             }
         }
         onCompletion(true)
@@ -62,12 +73,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     //MARK: UICollectionView
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.section.allKeys.count
+        return self.section.keys.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("UICollectionViewCell", forIndexPath: indexPath) as! LNSourceCollectionViewCell
-        print("Require for collection view")
+        //print("Require for collection view")
         cell.dataSource = self
         switch indexPath.row {
         case 0:
@@ -107,7 +118,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     //Table View data source
     func tableView(tableView: UITableView, cell: LNSourceCollectionViewCell, numberOfRowsInSection section: Int) -> Int {
-        let array = self.section[cell.title.text!] as! [LNSourceTemporary]
+        let array = self.section[cell.title.text!]!
         if array.count < 3 {
             return array.count
         }
@@ -117,8 +128,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func tableView(table: UITableView, cell: LNSourceCollectionViewCell, cellForRowAtIndexPath index: NSIndexPath) -> LNSourceTableViewCell {
         let cellForTableView = table.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: index) as! LNSourceTableViewCell
         let category = cell.title.text
-        print("Category \(category)")
-        let sourcesArray = self.section[category!] as! [LNSourceTemporary]
+        let sourcesArray = self.section[category!]!
         cellForTableView.name.text = sourcesArray[index.row].name
         return cellForTableView
 

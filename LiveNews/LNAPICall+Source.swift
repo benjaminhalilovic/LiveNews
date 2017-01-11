@@ -14,10 +14,10 @@ extension LNAPICall {
     
     func getSources(onCompletion: ([LNSourceTemporary]) -> Void) {
         let fullURL = baseURL + kLNSource_GET_Endpoint
-        print("Full url")
         makeHTTPGetRequest(fullURL, onCompletion: {
             data, err in
             let jsonObject: AnyObject = try! NSJSONSerialization.JSONObjectWithData(data!, options: [])
+           
             guard let jsonDictionary = jsonObject as? [NSObject: AnyObject], sourcesArray = jsonDictionary["sources"] as? [[String: AnyObject]] else {
                 print("error")
                 return

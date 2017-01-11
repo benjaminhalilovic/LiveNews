@@ -22,6 +22,7 @@ class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        //print("Awake from nib")
         self.tableView.dataSource = self
     }
     
@@ -30,10 +31,8 @@ class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("Require for table view")
-        if let dataSource = dataSource {
-            return dataSource.tableView(tableView, cell: self, cellForRowAtIndexPath: indexPath)
-        }
-        return UITableViewCell()
+        //print("Require for table view")
+        return (dataSource?.tableView(tableView, cell: self, cellForRowAtIndexPath: indexPath))!
+        
     }
 }
