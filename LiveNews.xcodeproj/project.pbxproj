@@ -23,7 +23,6 @@
 		04CA87651E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87641E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift */; };
 		04CA876D1E25343A00BF2FB9 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA876C1E25343A00BF2FB9 /* MenuController.swift */; };
 		04CA87721E2534D700BF2FB9 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87711E2534D700BF2FB9 /* SWRevealViewController.m */; };
-		04CA87741E255D3500BF2FB9 /* LNMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87731E255D3500BF2FB9 /* LNMenuTableViewCell.swift */; };
 		04CA87761E257A3F00BF2FB9 /* LNSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87751E257A3F00BF2FB9 /* LNSection.swift */; };
 		04CA877A1E25BC1A00BF2FB9 /* CellDescriptor.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04CA87791E25BC1A00BF2FB9 /* CellDescriptor.plist */; };
 		04CA877D1E267C6500BF2FB9 /* NormalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CA877C1E267C6500BF2FB9 /* NormalCell.xib */; };
@@ -52,7 +51,6 @@
 		04CA876F1E2534D600BF2FB9 /* LiveNews-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LiveNews-Bridging-Header.h"; sourceTree = "<group>"; };
 		04CA87701E2534D700BF2FB9 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		04CA87711E2534D700BF2FB9 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		04CA87731E255D3500BF2FB9 /* LNMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNMenuTableViewCell.swift; sourceTree = "<group>"; };
 		04CA87751E257A3F00BF2FB9 /* LNSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNSection.swift; sourceTree = "<group>"; };
 		04CA87791E25BC1A00BF2FB9 /* CellDescriptor.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CellDescriptor.plist; sourceTree = "<group>"; };
 		04CA877C1E267C6500BF2FB9 /* NormalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NormalCell.xib; sourceTree = "<group>"; };
@@ -190,7 +188,6 @@
 			children = (
 				04CA87621E040E2100BF2FB9 /* LNSourceTableViewCell.swift */,
 				04CA87641E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift */,
-				04CA87731E255D3500BF2FB9 /* LNMenuTableViewCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -310,7 +307,6 @@
 				04CA87721E2534D700BF2FB9 /* SWRevealViewController.m in Sources */,
 				04CA87761E257A3F00BF2FB9 /* LNSection.swift in Sources */,
 				040F98391E02B71D00839C40 /* LNAPICall+Source.swift in Sources */,
-				04CA87741E255D3500BF2FB9 /* LNMenuTableViewCell.swift in Sources */,
 				040F98321E02A65D00839C40 /* LNAPIManager.swift in Sources */,
 				040F98291E029C8900839C40 /* SwiftyJSON.swift in Sources */,
 				04CA87811E267C8D00BF2FB9 /* CustomCell.swift in Sources */,

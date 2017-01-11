@@ -12,7 +12,7 @@ import UIKit
 class MenuController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    let array = ["general", "business", "science-and-nature", "sport", "technology", "music", "gaming", "entertainment"]
+    let array = ["General", "Business", "Science-and-nature", "Sport", "Technology", "Music", "Gaming", "Entertainment"]
     var section : [String : [LNSourceTemporary]] {
         return LNSection.sharedInstance.section
     }
@@ -44,43 +44,81 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCellWithIdentifier(currentCellDescriptor["cellIdentifier"] as! String, forIndexPath: indexPath) as! CustomCell
         
         if currentCellDescriptor["cellIdentifier"] as! String == "idCellNormal" {
-            print("idCellNormal\(indexPath.row)")
-            cell.textLabel?.text = array[indexPath.section]
+            cell.textNormalCell.text = array[indexPath.section]
+            cell.colorView.backgroundColor = UIColor.blueColor()
+            switch indexPath.section {
+            case 0:
+                cell.colorView.backgroundColor = UIColor(red:65/255.0, green: 181/255.0, blue: 255/255.0, alpha: 1.0)
+                return cell
+            case 1:
+                 cell.colorView.backgroundColor = UIColor(red:255/255.0, green: 198/255.0, blue: 81/255.0, alpha: 1.0)
+                return cell
+            case 2:
+                 cell.colorView.backgroundColor = UIColor(red:255/255.0, green: 221/255.0, blue: 117/255.0, alpha: 1.0)
+                return cell
+            case 3:
+                 cell.colorView.backgroundColor = UIColor(red:31/255.0, green: 225/255.0, blue: 133/255.0, alpha: 1.0)
+                return cell
+            case 4:
+                 cell.colorView.backgroundColor = UIColor(red:236/255.0, green: 135/255.0, blue: 255/255.0, alpha: 1.0)
+                return cell
+            case 5:
+                cell.colorView.backgroundColor = UIColor(red:255/255.0, green: 128/255.0, blue: 127/255.0, alpha: 1.0)
+                return cell
+            case 6:
+                 cell.colorView.backgroundColor = UIColor(red:157/255.0, green: 148/255.0, blue: 255/255.0, alpha: 1.0)
+                return cell
+            case 7:
+                 cell.colorView.backgroundColor = UIColor(red:181/255.0, green: 198/255.0, blue: 225/255.0, alpha: 1.0)
+                return cell
+            default:
+                return cell
+            }
+
+            
         }
         
         else if currentCellDescriptor["cellIdentifier"] as! String == "idCellValuePicker" {
             switch indexPath.section {
             case 0:
                 var array = self.section["general"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:65/255.0, green: 181/255.0, blue: 255/255.0, alpha: 1.0)
                 return cell
             case 1:
                 var array = self.section["business"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text  = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:255/255.0, green: 198/255.0, blue: 81/255.0, alpha: 1.0)
                 return cell
             case 2:
                 var array = self.section["science-and-nature"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:255/255.0, green: 221/255.0, blue: 117/255.0, alpha: 1.0)
                 return cell
             case 3:
                 var array = self.section["sport"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:31/255.0, green: 225/255.0, blue: 133/255.0, alpha: 1.0)
                 return cell
             case 4:
                 var array = self.section["technology"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:236/255.0, green: 135/255.0, blue: 255/255.0, alpha: 1.0)
                 return cell
             case 5:
                 var array = self.section["music"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:255/255.0, green: 128/255.0, blue: 127/255.0, alpha: 1.0)
                 return cell
             case 6:
                 var array = self.section["gaming"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:157/255.0, green: 148/255.0, blue: 255/255.0, alpha: 1.0)
                 return cell
             case 7:
                 var array = self.section["entertainment"]!
-                cell.textLabel?.text = array[indexPath.row - 1].name
+                cell.textExpandCell.text = array[indexPath.row - 1].name
+                cell.colorExpandView.backgroundColor = UIColor(red:181/255.0, green: 198/255.0, blue: 225/255.0, alpha: 1.0)
                 return cell
             default:
                 return cell
@@ -136,7 +174,7 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             visibleRowsPerSection.append(visibleRows)
         }
-        print(visibleRowsPerSection)
+        //print(visibleRowsPerSection)
     }
     
     func getCellDescriptorForIndexPath(indexPath: NSIndexPath) -> [String: AnyObject] {

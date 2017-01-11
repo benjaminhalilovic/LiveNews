@@ -8,50 +8,22 @@
 
 import UIKit
 
-protocol CustomCellDelegate {
-    func dateWasSelected(selectedDateString: String)
-    
-    func maritalStatusSwitchChangedState(isOn: Bool)
-    
-    func textfieldTextWasChanged(newText: String, parentCell: CustomCell)
-    
-    func sliderDidChangeValue(newSliderValue: String)
-}
 
-class CustomCell: UITableViewCell, UITextFieldDelegate {
+class CustomCell: UITableViewCell {
 
     // MARK: IBOutlet Properties
+    @IBOutlet weak var colorView: UIView!
+    @IBOutlet weak var textNormalCell: UILabel!
+    @IBOutlet weak var textExpandCell: UILabel!
+    @IBOutlet weak var colorExpandView: UIView!
     
     
-    // MARK: Constants
-    
-    let bigFont = UIFont(name: "Avenir-Book", size: 17.0)
-    
-    let smallFont = UIFont(name: "Avenir-Light", size: 17.0)
-    
-    let primaryColor = UIColor.blackColor()
-    
-    let secondaryColor = UIColor.lightGrayColor()
-    
-    
+   
     // MARK: Variables
-    
-    var delegate: CustomCellDelegate!
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        if textLabel != nil {
-            textLabel?.font = bigFont
-            textLabel?.textColor = primaryColor
-        }
-        
-        if detailTextLabel != nil {
-            detailTextLabel?.font = smallFont
-            detailTextLabel?.textColor = secondaryColor
-        }
-
+       
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

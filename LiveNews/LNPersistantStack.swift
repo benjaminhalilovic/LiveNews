@@ -11,7 +11,7 @@ import CoreData
 
 class LNPersistantStack {
     private lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = NSBundle.mainBundle().URLForResource("Huskatalogen", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("LiveNews", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
     
