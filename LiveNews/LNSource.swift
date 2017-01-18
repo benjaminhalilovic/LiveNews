@@ -8,21 +8,24 @@
 
 import UIKit
 
-class LNSourceTemporary: NSObject {
+class LNSourceTemporary {
     let id: String
     let name: String
     let descriptionSource: String
     let url: String
     let category: String
     let country: String
+    let smallUrl: String
+    var image: UIImage?
     
-    init(id: String, name: String, description: String, url: String, category: String, country: String) {
+    init(id: String, name: String, description: String, url: String, category: String, country: String, smallURL: String) {
         self.id = id
         self.name = name
         self.descriptionSource = description
         self.url = url
         self.category = category
         self.country = country
+        self.smallUrl = smallURL
     }
     /*
     required init(json: JSON) {
@@ -33,4 +36,21 @@ class LNSourceTemporary: NSObject {
         category = json["category"].string
         country = json["country"].string
     }*/
+    
+   
 }
+
+
+extension LNSourceTemporary: Equatable {}
+
+func == (lhs: LNSourceTemporary, rhs: LNSourceTemporary) -> Bool {
+    return lhs.id == rhs.id
+}
+
+
+
+
+
+
+
+

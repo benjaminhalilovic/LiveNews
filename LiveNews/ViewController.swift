@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TableViewDataSource {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TableViewDataSource, TableViewDelegate{
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -17,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.collectionView.registerClass(LNSourceCollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
         // Do any additional setup after loading the view, typically from a nib.
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -24,6 +25,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         getSources()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,14 +40,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 self.createNSDictionary(sources){
                     bool in
                     LNSection.sharedInstance.section = self.section
-                    for(key, value) in self.section {
-                        print("Key: \(key)")
-                        let sources = value
-                        for x in sources {
-                            print("Value: \(x.name)")
-                        }
-                    }
-                    
                     self.collectionView.reloadData()
                 }
             }
@@ -53,8 +47,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    
-    //MARK: Create NSDictionary for sections
+  
+    //MARK: Create NSDictionary (key: category -> value: source)
     func createNSDictionary(sources: [LNSourceTemporary], onCompletion: (Bool) -> Void) {
         for x in sources {
             let currentCategory = x.category
@@ -70,6 +64,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         onCompletion(true)
     }
+
+
     
     //MARK: UICollectionView
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -77,9 +73,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+       
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("UICollectionViewCell", forIndexPath: indexPath) as! LNSourceCollectionViewCell
         //print("Require for collection view")
+        
         cell.dataSource = self
+        cell.delegate = self
         switch indexPath.row {
         case 0:
             cell.title.text = "general"
@@ -127,12 +127,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func tableView(table: UITableView, cell: LNSourceCollectionViewCell, cellForRowAtIndexPath index: NSIndexPath) -> LNSourceTableViewCell {
         let cellForTableView = table.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: index) as! LNSourceTableViewCell
+        
         let category = cell.title.text
         let sourcesArray = self.section[category!]!
         cellForTableView.name.text = sourcesArray[index.row].name
         return cellForTableView
 
     }
+    
+    func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let category = collCell.title.text
+        let sourcesArray = self.section[category!]!
+        let source = sourcesArray[indexPath.row]
+        print(source.id)
+        LNAPICall.sharedInstance.fetchImageForSource(source, category: category!) {
+            image, category in
+            NSOperationQueue.mainQueue().addOperationWithBlock(){
+                if let array = self.section[category] {
+                    let photoIndex = array.indexOf(source)
+                    let photoIndexPath = NSIndexPath(forRow: photoIndex!,  inSection: 0)
+                    
+                    if let cell = collCell.tableView.cellForRowAtIndexPath(photoIndexPath) as? LNSourceTableViewCell{
+                        cell.img.image = image
+                    }
+                }
+            }
+        }
+    }
+    
+    
     //end
 }
 

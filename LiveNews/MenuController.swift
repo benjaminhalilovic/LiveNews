@@ -140,6 +140,9 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
                 cellDescriptors[indexPath.section][i].setValue(shouldExpandAndShowSubRows, forKey: "isVisible")
             }
         }
+        if indexOfTappedRow != 0 {
+            self.performSegueWithIdentifier("showSourceNews", sender: self)
+        }
         getIndicesOfVisibleRows()
         tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
     }
@@ -174,7 +177,7 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             visibleRowsPerSection.append(visibleRows)
         }
-        //print(visibleRowsPerSection)
+        print(visibleRowsPerSection)
     }
     
     func getCellDescriptorForIndexPath(indexPath: NSIndexPath) -> [String: AnyObject] {

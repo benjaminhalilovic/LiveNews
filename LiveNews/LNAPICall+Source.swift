@@ -38,11 +38,34 @@ extension LNAPICall {
             let description = json["description"] as? String,
             let id = json["id"] as? String,
             let name = json["name"] as? String,
-            let url = json["url"] as? String else {
+            let url = json["url"] as? String,
+            let urlToLogos = json["urlsToLogos"] as? [String: AnyObject],
+            let smallUrl = urlToLogos["small"] as? String
+        else {
                 return nil
         }
-        return LNSourceTemporary(id: id, name: name, description: description, url: url, category: category, country: country)
+        return LNSourceTemporary(id: id, name: name, description: description, url: url, category: category, country: country, smallURL: smallUrl)
     }
+    
+    //MARK: Image Data
+    func fetchImageForSource(source: LNSourceTemporary, category: String, completion: (UIImage, category: String) -> Void) {
+        if let image = source.image {
+            completion(image, category: category)
+            return
+        }
+        let fullURL = source.smallUrl
+        makeHTTPGetRequest(fullURL) {
+            data, err in
+            if let imageData = data, image = UIImage(data: imageData)
+            {
+                source.image = image
+                completion(image, category: category)
+            }
+           
+        }
+        
+    }
+   
     
     //end
 }
