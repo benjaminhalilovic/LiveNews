@@ -33,6 +33,10 @@
 		04CA87881E298EAF00BF2FB9 /* LNAPICall+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87871E298EAF00BF2FB9 /* LNAPICall+News.swift */; };
 		04CA878C1E299BEA00BF2FB9 /* LNNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA878B1E299BEA00BF2FB9 /* LNNews.swift */; };
 		04CA87911E2F8B6600BF2FB9 /* HKUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87901E2F8B6600BF2FB9 /* HKUtils.swift */; };
+		04CA880A1E31560500BF2FB9 /* LNMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */; };
+		04CA883F1E32572900BF2FB9 /* LNRandomTabeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA883E1E32572900BF2FB9 /* LNRandomTabeViewCell.swift */; };
+		04CA88411E35741C00BF2FB9 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88401E35741C00BF2FB9 /* NewsViewController.swift */; };
+		04CA88451E37B1E000BF2FB9 /* LNNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +70,10 @@
 		04CA87871E298EAF00BF2FB9 /* LNAPICall+News.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LNAPICall+News.swift"; sourceTree = "<group>"; };
 		04CA878B1E299BEA00BF2FB9 /* LNNews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNNews.swift; sourceTree = "<group>"; };
 		04CA87901E2F8B6600BF2FB9 /* HKUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKUtils.swift; sourceTree = "<group>"; };
+		04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNMainTabBarController.swift; sourceTree = "<group>"; };
+		04CA883E1E32572900BF2FB9 /* LNRandomTabeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNRandomTabeViewCell.swift; sourceTree = "<group>"; };
+		04CA88401E35741C00BF2FB9 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNNewsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,8 +197,9 @@
 		04CA87601E040DE100BF2FB9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04CA88431E37AE1400BF2FB9 /* News Table View Cell */,
+				04CA883D1E3256EF00BF2FB9 /* Random Table View Cell */,
 				04CA877B1E267C4200BF2FB9 /* Custom Table View Cell */,
-				04CA87661E07DFB200BF2FB9 /* CollectionView */,
 				04CA87611E040DF400BF2FB9 /* Cell */,
 			);
 			name = View;
@@ -205,13 +214,6 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
-		04CA87661E07DFB200BF2FB9 /* CollectionView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = CollectionView;
-			sourceTree = "<group>";
-		};
 		04CA876B1E25337000BF2FB9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +221,8 @@
 				04CA876C1E25343A00BF2FB9 /* MenuController.swift */,
 				04CA87821E26F31900BF2FB9 /* SourceNewsController.swift */,
 				04CA87841E27030600BF2FB9 /* RandomNewController.swift */,
+				04CA88401E35741C00BF2FB9 /* NewsViewController.swift */,
+				04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -249,6 +253,22 @@
 				04CA87871E298EAF00BF2FB9 /* LNAPICall+News.swift */,
 			);
 			name = News;
+			sourceTree = "<group>";
+		};
+		04CA883D1E3256EF00BF2FB9 /* Random Table View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				04CA883E1E32572900BF2FB9 /* LNRandomTabeViewCell.swift */,
+			);
+			name = "Random Table View Cell";
+			sourceTree = "<group>";
+		};
+		04CA88431E37AE1400BF2FB9 /* News Table View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */,
+			);
+			name = "News Table View Cell";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,15 +348,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				04CA87721E2534D700BF2FB9 /* SWRevealViewController.m in Sources */,
+				04CA883F1E32572900BF2FB9 /* LNRandomTabeViewCell.swift in Sources */,
+				04CA88411E35741C00BF2FB9 /* NewsViewController.swift in Sources */,
 				04CA87761E257A3F00BF2FB9 /* LNSection.swift in Sources */,
 				040F98391E02B71D00839C40 /* LNAPICall+Source.swift in Sources */,
 				04CA87881E298EAF00BF2FB9 /* LNAPICall+News.swift in Sources */,
+				04CA88451E37B1E000BF2FB9 /* LNNewsTableViewCell.swift in Sources */,
 				04CA878C1E299BEA00BF2FB9 /* LNNews.swift in Sources */,
 				040F98321E02A65D00839C40 /* LNAPIManager.swift in Sources */,
 				040F98291E029C8900839C40 /* SwiftyJSON.swift in Sources */,
 				04CA87851E27030600BF2FB9 /* RandomNewController.swift in Sources */,
 				04CA87811E267C8D00BF2FB9 /* CustomCell.swift in Sources */,
 				040F98341E02AA7D00839C40 /* LNAPICall.swift in Sources */,
+				04CA880A1E31560500BF2FB9 /* LNMainTabBarController.swift in Sources */,
 				04CA87831E26F31900BF2FB9 /* SourceNewsController.swift in Sources */,
 				04CA876D1E25343A00BF2FB9 /* MenuController.swift in Sources */,
 				04CA87911E2F8B6600BF2FB9 /* HKUtils.swift in Sources */,
@@ -460,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LiveNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhdevelopers.LiveNews;
@@ -474,6 +499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LiveNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhdevelopers.LiveNews;

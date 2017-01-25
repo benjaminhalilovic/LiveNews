@@ -12,7 +12,7 @@ let kLNNews_GET_Endpoint = "articles?source=%@&apiKey=3e22f2fcc1344975ae2b2e6937
 
 extension LNAPICall {
 
-    func getOneNews(source: String, onCompletion: (LNNewsTemporary) -> Void) {
+    func getNews(source: String, onCompletion: ([LNNewsTemporary]) -> Void) {
         let fullURL = baseURL +  String(format: kLNNews_GET_Endpoint, source)
         makeHTTPGetRequest(fullURL, onCompletion: {
             data, err in
@@ -22,26 +22,45 @@ extension LNAPICall {
                 print("error")
                 return
             }
-            
-            if let source = self.newsFromJSONObject(sourcesArray[0], source: source) {
-                    onCompletion(source)
+            var finalArray = [LNNewsTemporary]()
+            for article in sourcesArray {
+                if let articleObject = self.newsFromJSONObject(article, source: source) {
+                    finalArray.append(articleObject)
                 }
+            }
+            onCompletion(finalArray)
         })
     }
     
-    
+    //Find better solution
     func newsFromJSONObject(json:[String: AnyObject], source: String) -> LNNewsTemporary? {
-        guard let author = json["author"] as? String,
-            let title = json["title"] as? String,
-            let urlToImage = json["urlToImage"] as? String,
-            let publishedAt = json["publishedAt"] as? String,
-            let url = json["url"] as? String,
-            let description = json["description"] as? String else {
-                return nil
-        }
+            let author = json["author"] as? String
+            let title = json["title"] as? String
+            let urlToImage = json["urlToImage"] as? String
+            let publishedAt = json["publishedAt"] as? String
+            let url = json["url"] as? String
+            let description = json["description"] as? String
+               
         return LNNewsTemporary(source: source, author: author, title: title, urlToImage: urlToImage, publishedAt: publishedAt, url: url, description: description)
+    }
+    
+    func fetchImageForArticle(news: LNNewsTemporary, source: String, completion: (UIImage, source: String) -> Void) {
+        if let image = news.image {
+            completion(image, source: source)
+            return
+        }
+        if let fullURL = news.urlToImage{
+            makeHTTPGetRequest(fullURL) {
+                data, err in
+                if let imageData = data, image = UIImage(data: imageData)
+                {
+                    news.image = image
+                    completion(image, source: source)
+                }
+            }
+        }
     }
 
     
-
+    //end
 }

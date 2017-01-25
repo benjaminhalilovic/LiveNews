@@ -14,10 +14,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     var section = [String : [LNSourceTemporary]]()
+    //var refreshControl : UIRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.collectionView.registerClass(LNSourceCollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
+        configureApperance()
         // Do any additional setup after loading the view, typically from a nib.
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -27,11 +28,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         getSources()
         
     }
+    
+    
+    func configureApperance() {
+        let bgImage = UIImageView();
+        bgImage.image = UIImage(named: "Newspaper_background");
+        bgImage.contentMode = .ScaleToFill
+        
+        self.collectionView?.backgroundView = bgImage
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 
     func getSources() {
         LNAPICall.sharedInstance.getSources(){
@@ -50,6 +62,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
   
     //MARK: Create NSDictionary (key: category -> value: source)
     func createNSDictionary(sources: [LNSourceTemporary], onCompletion: (Bool) -> Void) {
+        self.section.removeAll()
         for x in sources {
             let currentCategory = x.category
             if section[currentCategory] == nil {
@@ -73,41 +86,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-       
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("UICollectionViewCell", forIndexPath: indexPath) as! LNSourceCollectionViewCell
-        //print("Require for collection view")
-        
         cell.dataSource = self
         cell.delegate = self
-        switch indexPath.row {
-        case 0:
-            cell.title.text = "general"
-            return cell
-        case 1:
-            cell.title.text = "business"
-            return cell
-        case 2:
-            cell.title.text = "science-and-nature"
-            return cell
-        case 3:
-            cell.title.text = "sport"
-            return cell
-        case 4:
-            cell.title.text = "technology"
-            return cell
-        case 5:
-            cell.title.text = "music"
-            return cell
-        case 6:
-            cell.title.text = "gaming"
-            return cell
-        case 7:
-            cell.title.text = "entertainment"
-            return cell
-        default:
-            return cell
-        }
+        return cell.setupCell(indexPath)
     }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
@@ -118,6 +100,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     //Table View data source
     func tableView(tableView: UITableView, cell: LNSourceCollectionViewCell, numberOfRowsInSection section: Int) -> Int {
+        
         let array = self.section[cell.title.text!]!
         if array.count < 3 {
             return array.count
@@ -139,7 +122,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let category = collCell.title.text
         let sourcesArray = self.section[category!]!
         let source = sourcesArray[indexPath.row]
-        print(source.id)
         LNAPICall.sharedInstance.fetchImageForSource(source, category: category!) {
             image, category in
             NSOperationQueue.mainQueue().addOperationWithBlock(){
@@ -156,6 +138,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     
+    //MARK: Refresh Control
+    /*
+    func setupRefreshControl() {
+        self.refreshControl.tintColor = UIColor.blueColor()
+        self.refreshControl.addTarget(self, action: #selector(ViewController.refreshData), forControlEvents: UIControlEvents.ValueChanged)
+        self.collectionView.addSubview(self.refreshControl)
+    }
+    
+    func refreshData() {
+        print("Refresh data")
+        self.refreshControl.endRefreshing()
+    }
+    
+    */
     //end
 }
 

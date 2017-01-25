@@ -11,14 +11,15 @@ import CoreData
 
 class LNNewsTemporary {
     let source: String
-    let author: String
-    let title: String
-    let urlToImage: String
-    let publishedAt: String
-    let url: String
-    let desc: String
+    let author: String?
+    let title: String?
+    let urlToImage: String?
+    let publishedAt: String?
+    let url: String?
+    let desc: String?
+    var image: UIImage?
     
-    init(source:String, author: String, title: String, urlToImage: String, publishedAt: String, url: String, description: String) {
+    init(source:String, author: String?, title: String?, urlToImage: String?, publishedAt: String?, url: String?, description: String?) {
         self.source = source
         self.author = author
         self.title = title
@@ -30,4 +31,8 @@ class LNNewsTemporary {
 
 }
 
+extension LNNewsTemporary: Equatable {}
 
+func == (lhs: LNNewsTemporary, rhs: LNNewsTemporary) -> Bool {
+    return lhs.url == rhs.url
+}
