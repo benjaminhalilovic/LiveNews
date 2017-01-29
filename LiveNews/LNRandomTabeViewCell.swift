@@ -37,6 +37,11 @@ class LNRandomTabeViewCell: UITableViewCell {
     
     func setupCell(article: LNNewsTemporary, section: Int) {
         self.descript.text = article.desc
+        if  article.image == nil {
+            self.img.image = UIImage(named: "Home")
+            spinner.stopAnimating()
+            spinner.hidesWhenStopped = true
+        }
     }
     
 }

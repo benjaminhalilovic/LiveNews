@@ -13,7 +13,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var imageView: UIImageView!
+    
     var section = [String : [LNSourceTemporary]]()
+    var newsDataSource = [LNNewsTemporary]()
+    var frame: CGRect = CGRectMake(0, 0, 0, 0)
+    
     //var refreshControl : UIRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -26,25 +34,30 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         getSources()
+        getNews("cnbc")
         
     }
     
     
     func configureApperance() {
+        self.automaticallyAdjustsScrollViewInsets = false
+        //Background Image
         let bgImage = UIImageView();
         bgImage.image = UIImage(named: "Newspaper_background");
         bgImage.contentMode = .ScaleToFill
-        
         self.collectionView?.backgroundView = bgImage
+        
+        //Configure scrollView
+        self.scrollView.contentSize = CGSize(width:self.view.frame.width * 4, height:self.scrollView.frame.height)
+        self.scrollView.delegate = self
+        NSTimer.scheduledTimerWithTimeInterval(6, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
+        
+        //ImageView Action
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped(_:)))
+        scrollView.addGestureRecognizer(tap)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-
+    //MARK: Fetching data
     func getSources() {
         LNAPICall.sharedInstance.getSources(){
             (sources: [LNSourceTemporary]) in
@@ -55,9 +68,28 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     self.collectionView.reloadData()
                 }
             }
-            
         }
     }
+    
+    func getNews(source: String) {
+        LNAPICall.sharedInstance.getNews(source) {
+            news in
+            for article in news[0..<4] {
+                LNAPICall.sharedInstance.fetchImageForArticle(article, source: article.source) {
+                    image, source in
+                    article.image = image
+                    self.newsDataSource.append(article)
+                    if self.newsDataSource.count == news[0..<4].count {
+                        NSOperationQueue.mainQueue().addOperationWithBlock() {
+                            self.imageView.image = self.newsDataSource[0].image
+                            self.textLabel.text = self.newsDataSource[0].title
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     
   
     //MARK: Create NSDictionary (key: category -> value: source)
@@ -118,6 +150,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     }
     
+    //MARK: Table View delegate
     func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let category = collCell.title.text
         let sourcesArray = self.section[category!]!
@@ -137,6 +170,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let navController = storyboard.instantiateViewControllerWithIdentifier("NavConPresentNewsViewController") as? UINavigationController {
+            let category = collCell.title.text
+            let sourcesArray = self.section[category!]!
+            let source = sourcesArray[indexPath.row]
+            let presentNewsVC = navController.viewControllers[0] as! PresentNewsViewController
+            presentNewsVC.source = source.id
+            self.showViewController(navController, sender: self)
+        }
+    }
+    
     
     //MARK: Refresh Control
     /*
@@ -152,6 +197,46 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     */
+    
+    
+   //MARK: Page Control
+    
+    func moveToNextPage (){
+        let pageWidth:CGFloat = self.scrollView.frame.width
+        let maxWidth:CGFloat = pageWidth * 4
+        let contentOffset:CGFloat = self.scrollView.contentOffset.x
+        var slideToX = contentOffset + pageWidth
+
+        if  contentOffset + pageWidth == maxWidth {
+            slideToX = 0
+        }
+        self.scrollView.scrollRectToVisible(CGRect(x:slideToX, y:0, width:pageWidth, height:self.scrollView.frame.height), animated: true)
+     
+    }
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        if scrollView == self.scrollView {
+            let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
+            pageControl.currentPage = Int(pageNumber)
+            imageView.image = newsDataSource[Int(pageNumber)].image
+            textLabel.text = newsDataSource[Int(pageNumber)].title
+        }
+
+    }
+    
+    //MARK:ImageView action
+    func imageTapped(img: AnyObject)
+    {
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let newsViewController = storyboard.instantiateViewControllerWithIdentifier("NewsViewController") as? NewsViewController {
+            newsViewController.article = newsDataSource[pageControl.currentPage]
+            self.showViewController(newsViewController, sender: self)
+            
+        }
+        // Your action
+    }
+    
     //end
 }
 

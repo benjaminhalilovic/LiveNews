@@ -28,7 +28,6 @@
 		04CA877D1E267C6500BF2FB9 /* NormalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CA877C1E267C6500BF2FB9 /* NormalCell.xib */; };
 		04CA877F1E267C7E00BF2FB9 /* ValuePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CA877E1E267C7E00BF2FB9 /* ValuePickerCell.xib */; };
 		04CA87811E267C8D00BF2FB9 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87801E267C8D00BF2FB9 /* CustomCell.swift */; };
-		04CA87831E26F31900BF2FB9 /* SourceNewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87821E26F31900BF2FB9 /* SourceNewsController.swift */; };
 		04CA87851E27030600BF2FB9 /* RandomNewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87841E27030600BF2FB9 /* RandomNewController.swift */; };
 		04CA87881E298EAF00BF2FB9 /* LNAPICall+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87871E298EAF00BF2FB9 /* LNAPICall+News.swift */; };
 		04CA878C1E299BEA00BF2FB9 /* LNNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA878B1E299BEA00BF2FB9 /* LNNews.swift */; };
@@ -37,6 +36,7 @@
 		04CA883F1E32572900BF2FB9 /* LNRandomTabeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA883E1E32572900BF2FB9 /* LNRandomTabeViewCell.swift */; };
 		04CA88411E35741C00BF2FB9 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88401E35741C00BF2FB9 /* NewsViewController.swift */; };
 		04CA88451E37B1E000BF2FB9 /* LNNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */; };
+		04CA88491E3D27BE00BF2FB9 /* PresentNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88481E3D27BE00BF2FB9 /* PresentNewsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +65,6 @@
 		04CA877C1E267C6500BF2FB9 /* NormalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NormalCell.xib; sourceTree = "<group>"; };
 		04CA877E1E267C7E00BF2FB9 /* ValuePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValuePickerCell.xib; sourceTree = "<group>"; };
 		04CA87801E267C8D00BF2FB9 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
-		04CA87821E26F31900BF2FB9 /* SourceNewsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceNewsController.swift; sourceTree = "<group>"; };
 		04CA87841E27030600BF2FB9 /* RandomNewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNewController.swift; sourceTree = "<group>"; };
 		04CA87871E298EAF00BF2FB9 /* LNAPICall+News.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LNAPICall+News.swift"; sourceTree = "<group>"; };
 		04CA878B1E299BEA00BF2FB9 /* LNNews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNNews.swift; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 		04CA883E1E32572900BF2FB9 /* LNRandomTabeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNRandomTabeViewCell.swift; sourceTree = "<group>"; };
 		04CA88401E35741C00BF2FB9 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNNewsTableViewCell.swift; sourceTree = "<group>"; };
+		04CA88481E3D27BE00BF2FB9 /* PresentNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentNewsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,12 +217,12 @@
 		04CA876B1E25337000BF2FB9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				040F98131E028CD100839C40 /* ViewController.swift */,
+				04CA88471E3D13A900BF2FB9 /* New Group */,
 				04CA876C1E25343A00BF2FB9 /* MenuController.swift */,
-				04CA87821E26F31900BF2FB9 /* SourceNewsController.swift */,
+				04CA88481E3D27BE00BF2FB9 /* PresentNewsViewController.swift */,
+				040F98131E028CD100839C40 /* ViewController.swift */,
 				04CA87841E27030600BF2FB9 /* RandomNewController.swift */,
 				04CA88401E35741C00BF2FB9 /* NewsViewController.swift */,
-				04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -269,6 +269,14 @@
 				04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */,
 			);
 			name = "News Table View Cell";
+			sourceTree = "<group>";
+		};
+		04CA88471E3D13A900BF2FB9 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */,
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,7 +369,6 @@
 				04CA87811E267C8D00BF2FB9 /* CustomCell.swift in Sources */,
 				040F98341E02AA7D00839C40 /* LNAPICall.swift in Sources */,
 				04CA880A1E31560500BF2FB9 /* LNMainTabBarController.swift in Sources */,
-				04CA87831E26F31900BF2FB9 /* SourceNewsController.swift in Sources */,
 				04CA876D1E25343A00BF2FB9 /* MenuController.swift in Sources */,
 				04CA87911E2F8B6600BF2FB9 /* HKUtils.swift in Sources */,
 				040F98141E028CD100839C40 /* ViewController.swift in Sources */,
@@ -371,6 +378,7 @@
 				040F98121E028CD100839C40 /* AppDelegate.swift in Sources */,
 				04CA87631E040E2100BF2FB9 /* LNSourceTableViewCell.swift in Sources */,
 				040F982C1E029D9400839C40 /* LNPersistantStack.swift in Sources */,
+				04CA88491E3D27BE00BF2FB9 /* PresentNewsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,10 +493,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LiveNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhdevelopers.LiveNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveNews/LiveNews-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -500,10 +510,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LiveNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhdevelopers.LiveNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveNews/LiveNews-Bridging-Header.h";
 			};
 			name = Release;

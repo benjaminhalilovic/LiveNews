@@ -9,17 +9,28 @@
 import UIKit
 
 class RandomNewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     var dataSource = [String : [LNNewsTemporary]]()
     var counter = 0
     var sources : [String] = []
-    
-    @IBOutlet weak var tableView: UITableView!
+    var fetchingData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureApperance()
+        if revealViewController() != nil {
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
         if let selectedTabIndex = tabBarController?.selectedIndex {
             switch selectedTabIndex {
+            case 0:
+                self.navigationItem.title = sources[counter]
+                fetchingData = true
+                tableView.tableFooterView = nil
+                getNews(sources[counter])
             case 1:
                 self.sources = ["associated-press", "daily-mail", "sky-sports-news", "cnbc"]
                 self.navigationItem.title = "Lastest news"
@@ -31,6 +42,9 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
             default:
                 break
             }
+        } else {
+            self.tableView.tableFooterView = nil
+            getNews(sources[counter])
         }
     }
     
@@ -61,6 +75,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
                    // print(value.count)
                 }
                 self.tableView.reloadData()
+                self.fetchingData = false
             }
         }
     }
@@ -91,6 +106,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
         let source = sources[indexPath.section]
         if let news = dataSource[source] {
             let article = news[indexPath.row]
+            
             LNAPICall.sharedInstance.fetchImageForArticle(article, source: source) {
                 image, source in
                 NSOperationQueue.mainQueue().addOperationWithBlock(){
@@ -133,18 +149,21 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     
-    //Better solution!
-    //MARK: Scroll View Delegate
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        if currentOffset - maximumOffset > -110{
-            if counter < 3 {
-                counter = counter + 1
-                getNews(sources[counter])
+        if currentOffset - maximumOffset > -20 {
+            //find better solution
+            if !fetchingData {
+                fetchingData = true
+                if counter < sources.count - 1 {
+                    counter = counter + 1
+                    getNews(sources[counter])
+                }
             }
         }
     }
+
     
     //MARK: Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -160,6 +179,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
 
+ 
     
     //end
 }

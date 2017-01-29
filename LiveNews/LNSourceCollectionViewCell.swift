@@ -15,6 +15,7 @@ protocol TableViewDataSource:class {
 
 protocol TableViewDelegate:class{
     func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+     func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell,didSelectRowAtIndexPath indexPath: NSIndexPath)
 }
 
 class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
@@ -75,7 +76,7 @@ class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource, U
 
     }
     
-    
+    //Data Source
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfRows = dataSource?.tableView(tableView, cell: self, numberOfRowsInSection: section)
         self.layoutIfNeeded()
@@ -88,8 +89,13 @@ class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource, U
         
     }
     
+    //Delegate
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
             delegate?.tableView(tableView, collCell: self, willDisplayCell: cell as! LNSourceTableViewCell, forRowAtIndexPath: indexPath)
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        delegate?.tableView(tableView, collCell: self, didSelectRowAtIndexPath: indexPath)
     }
     
 }

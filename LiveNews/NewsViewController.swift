@@ -12,7 +12,6 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var segmentControl: UISegmentedControl!
     
     var article: LNNewsTemporary! {
         didSet {
@@ -75,7 +74,7 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
         if let urlButton = self.view.viewWithTag(15) as? UIButton {
             if let url = article.url {
                 urlButton.setTitle(url, forState: UIControlState.Normal)
-                self.heightForView(urlButton.titleLabel!)
+                urlButton.sizeToFit()
             }
         }
     }

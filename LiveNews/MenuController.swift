@@ -10,7 +10,6 @@ import UIKit
 
 
 class MenuController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
     @IBOutlet weak var tableView: UITableView!
     let array = ["General", "Business", "Science-and-nature", "Sport", "Technology", "Music", "Gaming", "Entertainment"]
     var section : [String : [LNSourceTemporary]] {
@@ -22,6 +21,7 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         configureTableView()
         loadCellDescriptors()
     }
@@ -127,6 +127,8 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let indexOfTappedRow = visibleRowsPerSection[indexPath.section][indexPath.row]
         if cellDescriptors[indexPath.section][indexOfTappedRow]["isExpandable"] as! Bool == true {
@@ -141,12 +143,14 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         if indexOfTappedRow != 0 {
-            self.performSegueWithIdentifier("showSourceNews", sender: self)
+           self.performSegueWithIdentifier("PresentRandomViewController", sender: self)
         }
+        
         getIndicesOfVisibleRows()
         tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
+        
     //Helper methods : 
     
     func configureTableView() {
@@ -177,7 +181,7 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             visibleRowsPerSection.append(visibleRows)
         }
-        print(visibleRowsPerSection)
+       // print(visibleRowsPerSection)
     }
     
     func getCellDescriptorForIndexPath(indexPath: NSIndexPath) -> [String: AnyObject] {
