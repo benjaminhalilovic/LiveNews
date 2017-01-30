@@ -13,18 +13,18 @@ class LNAPIManager: NSObject {
     let baseURL = "https://newsapi.org/v1/"
     
     // MARK: Perform a GET Request
-    func makeHTTPGetRequest(path: String, onCompletion: (data: NSData?, error: NSError?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
+    func makeHTTPGetRequest(_ path: String, onCompletion: @escaping (_ data: Data?, _ error: NSError?) -> Void) {
+        let request = URLRequest(url:URL(string: path)!)
+        let session = URLSession.shared
         
-        let session = NSURLSession.sharedSession()
-        
-        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+        let task = session.dataTask(with: request, completionHandler: {data, response, error -> Void in
             if data != nil {
-                onCompletion(data:data, error: nil)
+                onCompletion(data, nil)
             } else {
-                onCompletion(data:nil, error: error)
+                onCompletion(nil, error as NSError?)
             }
         })
         task.resume()
     }
+
 }

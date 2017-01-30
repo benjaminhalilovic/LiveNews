@@ -12,13 +12,13 @@ let kLNSource_GET_Endpoint = "sources"
 
 extension LNAPICall {
     
-    func getSources(onCompletion: ([LNSourceTemporary]) -> Void) {
+    func getSources(_ onCompletion: @escaping ([LNSourceTemporary]) -> Void) {
         let fullURL = baseURL + kLNSource_GET_Endpoint
         makeHTTPGetRequest(fullURL, onCompletion: {
             data, err in
-            let jsonObject: AnyObject = try! NSJSONSerialization.JSONObjectWithData(data!, options: [])
-           
-            guard let jsonDictionary = jsonObject as? [NSObject: AnyObject], sourcesArray = jsonDictionary["sources"] as? [[String: AnyObject]] else {
+            let jsonObject = try! JSONSerialization.jsonObject(with: data!, options: [])
+            
+            guard let jsonDictionary = jsonObject as? [AnyHashable: Any], let sourcesArray = jsonDictionary["sources"] as? [[String: AnyObject]] else {
                 print("error")
                 return
             }
@@ -32,7 +32,7 @@ extension LNAPICall {
         })
     }
     
-    func sourceFromJSONObject(json:[String: AnyObject]) -> LNSourceTemporary? {
+    func sourceFromJSONObject(_ json:[String: AnyObject]) -> LNSourceTemporary? {
         guard let category = json["category"] as? String,
             let country = json["country"] as? String,
             let description = json["description"] as? String,
@@ -41,31 +41,27 @@ extension LNAPICall {
             let url = json["url"] as? String,
             let urlToLogos = json["urlsToLogos"] as? [String: AnyObject],
             let smallUrl = urlToLogos["small"] as? String
-        else {
+            else {
                 return nil
         }
         return LNSourceTemporary(id: id, name: name, description: description, url: url, category: category, country: country, smallURL: smallUrl)
     }
     
     //MARK: Image Data
-    func fetchImageForSource(source: LNSourceTemporary, category: String, completion: (UIImage, category: String) -> Void) {
+    func fetchImageForSource(_ source: LNSourceTemporary, category: String, completion: @escaping (UIImage, _ cat: String) -> Void) {
         if let image = source.image {
-            completion(image, category: category)
+            completion(image, category)
             return
         }
         let fullURL = source.smallUrl
         makeHTTPGetRequest(fullURL) {
             data, err in
-            if let imageData = data, image = UIImage(data: imageData)
+            if let imageData = data, let image = UIImage(data: imageData)
             {
                 source.image = image
-                completion(image, category: category)
+                completion(image, category)
             }
-           
         }
-        
     }
-   
-    
     //end
 }

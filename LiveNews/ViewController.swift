@@ -20,7 +20,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var section = [String : [LNSourceTemporary]]()
     var newsDataSource = [LNNewsTemporary]()
-    var frame: CGRect = CGRectMake(0, 0, 0, 0)
+    var frame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
     //var refreshControl : UIRefreshControl = UIRefreshControl()
     
@@ -44,13 +44,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         //Background Image
         let bgImage = UIImageView();
         bgImage.image = UIImage(named: "Newspaper_background");
-        bgImage.contentMode = .ScaleToFill
+        bgImage.contentMode = .scaleToFill
         self.collectionView?.backgroundView = bgImage
         
         //Configure scrollView
         self.scrollView.contentSize = CGSize(width:self.view.frame.width * 4, height:self.scrollView.frame.height)
         self.scrollView.delegate = self
-        NSTimer.scheduledTimerWithTimeInterval(6, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
         
         //ImageView Action
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped(_:)))
@@ -61,7 +61,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func getSources() {
         LNAPICall.sharedInstance.getSources(){
             (sources: [LNSourceTemporary]) in
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
+            OperationQueue.main.addOperation() {
                 self.createNSDictionary(sources){
                     bool in
                     LNSection.sharedInstance.section = self.section
@@ -71,7 +71,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    func getNews(source: String) {
+    func getNews(_ source: String) {
         LNAPICall.sharedInstance.getNews(source) {
             news in
             for article in news[0..<4] {
@@ -80,7 +80,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     article.image = image
                     self.newsDataSource.append(article)
                     if self.newsDataSource.count == news[0..<4].count {
-                        NSOperationQueue.mainQueue().addOperationWithBlock() {
+                        OperationQueue.main.addOperation() {
                             self.imageView.image = self.newsDataSource[0].image
                             self.textLabel.text = self.newsDataSource[0].title
                         }
@@ -93,7 +93,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
   
     //MARK: Create NSDictionary (key: category -> value: source)
-    func createNSDictionary(sources: [LNSourceTemporary], onCompletion: (Bool) -> Void) {
+    func createNSDictionary(_ sources: [LNSourceTemporary], onCompletion: (Bool) -> Void) {
         self.section.removeAll()
         for x in sources {
             let currentCategory = x.category
@@ -113,25 +113,25 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     
     //MARK: UICollectionView
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.section.keys.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("UICollectionViewCell", forIndexPath: indexPath) as! LNSourceCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UICollectionViewCell", for: indexPath) as! LNSourceCollectionViewCell
         cell.dataSource = self
         cell.delegate = self
         return cell.setupCell(indexPath)
     }
     
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         //Expencive work
         let cell = cell as! LNSourceCollectionViewCell
         cell.tableView.reloadData()
     }
     
     //Table View data source
-    func tableView(tableView: UITableView, cell: LNSourceCollectionViewCell, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, cell: LNSourceCollectionViewCell, numberOfRowsInSection section: Int) -> Int {
         
         let array = self.section[cell.title.text!]!
         if array.count < 3 {
@@ -140,8 +140,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return 3
     }
     
-    func tableView(table: UITableView, cell: LNSourceCollectionViewCell, cellForRowAtIndexPath index: NSIndexPath) -> LNSourceTableViewCell {
-        let cellForTableView = table.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: index) as! LNSourceTableViewCell
+    func tableView(_ table: UITableView, cell: LNSourceCollectionViewCell, cellForRowAtIndexPath index: IndexPath) -> LNSourceTableViewCell {
+        let cellForTableView = table.dequeueReusableCell(withIdentifier: "UITableViewCell", for: index) as! LNSourceTableViewCell
         
         let category = cell.title.text
         let sourcesArray = self.section[category!]!
@@ -151,18 +151,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     //MARK: Table View delegate
-    func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: IndexPath) {
         let category = collCell.title.text
         let sourcesArray = self.section[category!]!
         let source = sourcesArray[indexPath.row]
         LNAPICall.sharedInstance.fetchImageForSource(source, category: category!) {
             image, category in
-            NSOperationQueue.mainQueue().addOperationWithBlock(){
+            OperationQueue.main.addOperation(){
                 if let array = self.section[category] {
-                    let photoIndex = array.indexOf(source)
-                    let photoIndexPath = NSIndexPath(forRow: photoIndex!,  inSection: 0)
+                    let photoIndex = array.index(of: source)
+                    let photoIndexPath = IndexPath(row: photoIndex!,  section: 0)
                     
-                    if let cell = collCell.tableView.cellForRowAtIndexPath(photoIndexPath) as? LNSourceTableViewCell{
+                    if let cell = collCell.tableView.cellForRow(at: photoIndexPath) as? LNSourceTableViewCell{
                         cell.img.image = image
                     }
                 }
@@ -170,15 +170,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, collCell: LNSourceCollectionViewCell, didSelectRowAtIndexPath indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let navController = storyboard.instantiateViewControllerWithIdentifier("NavConPresentNewsViewController") as? UINavigationController {
+        if let navController = storyboard.instantiateViewController(withIdentifier: "NavConPresentNewsViewController") as? UINavigationController {
             let category = collCell.title.text
             let sourcesArray = self.section[category!]!
             let source = sourcesArray[indexPath.row]
             let presentNewsVC = navController.viewControllers[0] as! PresentNewsViewController
             presentNewsVC.source = source.id
-            self.showViewController(navController, sender: self)
+            self.show(navController, sender: self)
         }
     }
     
@@ -214,7 +214,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
      
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == self.scrollView {
             let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
             pageControl.currentPage = Int(pageNumber)
@@ -225,13 +225,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     //MARK:ImageView action
-    func imageTapped(img: AnyObject)
+    func imageTapped(_ img: AnyObject)
     {
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let newsViewController = storyboard.instantiateViewControllerWithIdentifier("NewsViewController") as? NewsViewController {
+        if let newsViewController = storyboard.instantiateViewController(withIdentifier: "NewsViewController") as? NewsViewController {
             newsViewController.article = newsDataSource[pageControl.currentPage]
-            self.showViewController(newsViewController, sender: self)
+            self.show(newsViewController, sender: self)
             
         }
         // Your action

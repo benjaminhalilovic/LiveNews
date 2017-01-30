@@ -12,9 +12,6 @@
 		040F98171E028CD100839C40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040F98151E028CD100839C40 /* Main.storyboard */; };
 		040F98191E028CD100839C40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040F98181E028CD100839C40 /* Assets.xcassets */; };
 		040F981C1E028CD100839C40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040F981A1E028CD100839C40 /* LaunchScreen.storyboard */; };
-		040F98291E029C8900839C40 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F98281E029C8900839C40 /* SwiftyJSON.swift */; };
-		040F982C1E029D9400839C40 /* LNPersistantStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F982B1E029D9400839C40 /* LNPersistantStack.swift */; };
-		040F982E1E02A0F700839C40 /* LNDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F982D1E02A0F700839C40 /* LNDataManager.swift */; };
 		040F98301E02A21500839C40 /* LNSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F982F1E02A21500839C40 /* LNSource.swift */; };
 		040F98321E02A65D00839C40 /* LNAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F98311E02A65D00839C40 /* LNAPIManager.swift */; };
 		040F98341E02AA7D00839C40 /* LNAPICall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F98331E02AA7D00839C40 /* LNAPICall.swift */; };
@@ -32,7 +29,6 @@
 		04CA87881E298EAF00BF2FB9 /* LNAPICall+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87871E298EAF00BF2FB9 /* LNAPICall+News.swift */; };
 		04CA878C1E299BEA00BF2FB9 /* LNNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA878B1E299BEA00BF2FB9 /* LNNews.swift */; };
 		04CA87911E2F8B6600BF2FB9 /* HKUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87901E2F8B6600BF2FB9 /* HKUtils.swift */; };
-		04CA880A1E31560500BF2FB9 /* LNMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */; };
 		04CA883F1E32572900BF2FB9 /* LNRandomTabeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA883E1E32572900BF2FB9 /* LNRandomTabeViewCell.swift */; };
 		04CA88411E35741C00BF2FB9 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88401E35741C00BF2FB9 /* NewsViewController.swift */; };
 		04CA88451E37B1E000BF2FB9 /* LNNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */; };
@@ -47,9 +43,6 @@
 		040F98181E028CD100839C40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		040F981B1E028CD100839C40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		040F981D1E028CD100839C40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		040F98281E029C8900839C40 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		040F982B1E029D9400839C40 /* LNPersistantStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNPersistantStack.swift; sourceTree = "<group>"; };
-		040F982D1E02A0F700839C40 /* LNDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNDataManager.swift; sourceTree = "<group>"; };
 		040F982F1E02A21500839C40 /* LNSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNSource.swift; sourceTree = "<group>"; };
 		040F98311E02A65D00839C40 /* LNAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNAPIManager.swift; sourceTree = "<group>"; };
 		040F98331E02AA7D00839C40 /* LNAPICall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNAPICall.swift; sourceTree = "<group>"; };
@@ -69,7 +62,6 @@
 		04CA87871E298EAF00BF2FB9 /* LNAPICall+News.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LNAPICall+News.swift"; sourceTree = "<group>"; };
 		04CA878B1E299BEA00BF2FB9 /* LNNews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNNews.swift; sourceTree = "<group>"; };
 		04CA87901E2F8B6600BF2FB9 /* HKUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKUtils.swift; sourceTree = "<group>"; };
-		04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNMainTabBarController.swift; sourceTree = "<group>"; };
 		04CA883E1E32572900BF2FB9 /* LNRandomTabeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNRandomTabeViewCell.swift; sourceTree = "<group>"; };
 		04CA88401E35741C00BF2FB9 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		04CA88441E37B1DF00BF2FB9 /* LNNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNNewsTableViewCell.swift; sourceTree = "<group>"; };
@@ -127,7 +119,6 @@
 			children = (
 				040F98241E0299B600839C40 /* Model */,
 				040F982A1E029CE200839C40 /* Manager */,
-				040F982B1E029D9400839C40 /* LNPersistantStack.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -146,17 +137,8 @@
 			isa = PBXGroup;
 			children = (
 				040F98271E029C5600839C40 /* API */,
-				040F98261E029C4600839C40 /* SwiftJSON */,
 			);
 			name = Services;
-			sourceTree = "<group>";
-		};
-		040F98261E029C4600839C40 /* SwiftJSON */ = {
-			isa = PBXGroup;
-			children = (
-				040F98281E029C8900839C40 /* SwiftyJSON.swift */,
-			);
-			name = SwiftJSON;
 			sourceTree = "<group>";
 		};
 		040F98271E029C5600839C40 /* API */ = {
@@ -173,7 +155,6 @@
 		040F982A1E029CE200839C40 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				040F982D1E02A0F700839C40 /* LNDataManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -184,6 +165,14 @@
 				040F98381E02B71D00839C40 /* LNAPICall+Source.swift */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		043763C21E3F8E6700D0991F /* Menu View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				04CA876C1E25343A00BF2FB9 /* MenuController.swift */,
+			);
+			name = "Menu View Controller";
 			sourceTree = "<group>";
 		};
 		04CA875F1E03F2AD00BF2FB9 /* Helpers */ = {
@@ -217,8 +206,7 @@
 		04CA876B1E25337000BF2FB9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				04CA88471E3D13A900BF2FB9 /* New Group */,
-				04CA876C1E25343A00BF2FB9 /* MenuController.swift */,
+				043763C21E3F8E6700D0991F /* Menu View Controller */,
 				04CA88481E3D27BE00BF2FB9 /* PresentNewsViewController.swift */,
 				040F98131E028CD100839C40 /* ViewController.swift */,
 				04CA87841E27030600BF2FB9 /* RandomNewController.swift */,
@@ -271,14 +259,6 @@
 			name = "News Table View Cell";
 			sourceTree = "<group>";
 		};
-		04CA88471E3D13A900BF2FB9 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-				04CA88091E31560500BF2FB9 /* LNMainTabBarController.swift */,
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,6 +293,7 @@
 					040F980D1E028CD100839C40 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 3Q9N6D9T5E;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -364,20 +345,16 @@
 				04CA88451E37B1E000BF2FB9 /* LNNewsTableViewCell.swift in Sources */,
 				04CA878C1E299BEA00BF2FB9 /* LNNews.swift in Sources */,
 				040F98321E02A65D00839C40 /* LNAPIManager.swift in Sources */,
-				040F98291E029C8900839C40 /* SwiftyJSON.swift in Sources */,
 				04CA87851E27030600BF2FB9 /* RandomNewController.swift in Sources */,
 				04CA87811E267C8D00BF2FB9 /* CustomCell.swift in Sources */,
 				040F98341E02AA7D00839C40 /* LNAPICall.swift in Sources */,
-				04CA880A1E31560500BF2FB9 /* LNMainTabBarController.swift in Sources */,
 				04CA876D1E25343A00BF2FB9 /* MenuController.swift in Sources */,
 				04CA87911E2F8B6600BF2FB9 /* HKUtils.swift in Sources */,
 				040F98141E028CD100839C40 /* ViewController.swift in Sources */,
 				040F98301E02A21500839C40 /* LNSource.swift in Sources */,
-				040F982E1E02A0F700839C40 /* LNDataManager.swift in Sources */,
 				04CA87651E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift in Sources */,
 				040F98121E028CD100839C40 /* AppDelegate.swift in Sources */,
 				04CA87631E040E2100BF2FB9 /* LNSourceTableViewCell.swift in Sources */,
-				040F982C1E029D9400839C40 /* LNPersistantStack.swift in Sources */,
 				04CA88491E3D27BE00BF2FB9 /* PresentNewsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +478,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveNews/LiveNews-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -517,6 +495,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveNews/LiveNews-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

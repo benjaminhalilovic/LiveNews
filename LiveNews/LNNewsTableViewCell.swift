@@ -24,7 +24,7 @@ class LNNewsTableViewCell: UITableViewCell {
         updateWithImage(nil)
     }
     
-    func updateWithImage(image: UIImage?) {
+    func updateWithImage(_ image: UIImage?) {
         if let imageToDisplay = image {
             spinner.stopAnimating()
             spinner.hidesWhenStopped = true
@@ -35,7 +35,7 @@ class LNNewsTableViewCell: UITableViewCell {
         }
     }
     
-    func setupCell(article: LNNewsTemporary) {
+    func setupCell(_ article: LNNewsTemporary) {
         titleLabel.text = article.title
     }
 }

@@ -24,7 +24,7 @@ class LNRandomTabeViewCell: UITableViewCell {
         updateWithImage(nil)
     }
     
-    func updateWithImage(image: UIImage?) {
+    func updateWithImage(_ image: UIImage?) {
         if let imageToDisplay = image {
             spinner.stopAnimating()
             spinner.hidesWhenStopped = true
@@ -35,7 +35,7 @@ class LNRandomTabeViewCell: UITableViewCell {
         }
     }
     
-    func setupCell(article: LNNewsTemporary, section: Int) {
+    func setupCell(_ article: LNNewsTemporary, section: Int) {
         self.descript.text = article.desc
         if  article.image == nil {
             self.img.image = UIImage(named: "Home")

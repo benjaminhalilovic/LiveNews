@@ -9,13 +9,13 @@
 import UIKit
 
 protocol TableViewDataSource:class {
-    func tableView(table: UITableView, cell:LNSourceCollectionViewCell, cellForRowAtIndexPath index: NSIndexPath) -> LNSourceTableViewCell
-    func tableView(tableView: UITableView, cell:LNSourceCollectionViewCell, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ table: UITableView, cell:LNSourceCollectionViewCell, cellForRowAtIndexPath index: IndexPath) -> LNSourceTableViewCell
+    func tableView(_ tableView: UITableView, cell:LNSourceCollectionViewCell, numberOfRowsInSection section: Int) -> Int
 }
 
 protocol TableViewDelegate:class{
-    func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
-     func tableView(tableView: UITableView, collCell: LNSourceCollectionViewCell,didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: IndexPath)
+     func tableView(_ tableView: UITableView, collCell: LNSourceCollectionViewCell,didSelectRowAtIndexPath indexPath: IndexPath)
 }
 
 class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
@@ -35,7 +35,7 @@ class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource, U
         
     }
     
-    func setupCell(index: NSIndexPath) -> LNSourceCollectionViewCell{
+    func setupCell(_ index: IndexPath) -> LNSourceCollectionViewCell{
         let index = index.row
         switch index {
         case 0:
@@ -77,24 +77,24 @@ class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource, U
     }
     
     //Data Source
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfRows = dataSource?.tableView(tableView, cell: self, numberOfRowsInSection: section)
         self.layoutIfNeeded()
         return numberOfRows!
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // print("Require for table view")
         return (dataSource?.tableView(tableView, cell: self, cellForRowAtIndexPath: indexPath))!
         
     }
     
     //Delegate
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
             delegate?.tableView(tableView, collCell: self, willDisplayCell: cell as! LNSourceTableViewCell, forRowAtIndexPath: indexPath)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.tableView(tableView, collCell: self, didSelectRowAtIndexPath: indexPath)
     }
     

@@ -15,121 +15,80 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
     var section : [String : [LNSourceTemporary]] {
         return LNSection.sharedInstance.section
     }
-    var cellDescriptors: NSMutableArray!
+    var cellDescriptors: [[[String: AnyObject]]] = []
     var visibleRowsPerSection = [[Int]]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         configureTableView()
         loadCellDescriptors()
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if cellDescriptors != nil {
-            return cellDescriptors.count
-        }
-        else {
-            return 0
-        }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return cellDescriptors.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //If number of self.section < visibleRow from plist. Only for safe!
+        switch section {
+        case 0:
+            if self.section["general"]!.count + 1 < visibleRowsPerSection[section].count {
+                return self.section["general"]!.count + 1
+            }
+        case 1:
+            if self.section["business"]!.count + 1  < visibleRowsPerSection[section].count {
+                return self.section["business"]!.count + 1
+            }
+        case 2:
+            if self.section["science-and-nature"]!.count + 1 < visibleRowsPerSection[section].count {
+                print("Small")
+                return self.section["science-and-nature"]!.count + 1
+            }
+        case 3:
+            if self.section["sport"]!.count + 1  < visibleRowsPerSection[section].count {
+                return self.section["sport"]!.count + 1
+            }
+        case 4:
+            if self.section["technology"]!.count + 1  < visibleRowsPerSection[section].count {
+                return self.section["technology"]!.count + 1
+            }
+        case 5:
+            if self.section["music"]!.count + 1  < visibleRowsPerSection[section].count {
+                return self.section["music"]!.count + 1
+            }
+        case 6:
+            if self.section["gaming"]!.count + 1  < visibleRowsPerSection[section].count {
+                return self.section["gaming"]!.count + 1
+            }
+        case 7:
+            if self.section["entertainment"]!.count + 1  < visibleRowsPerSection[section].count {
+                return self.section["entertainment"]!.count + 1
+            }
+        default:
+            return visibleRowsPerSection[section].count
+        }
         return visibleRowsPerSection[section].count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentCellDescriptor = getCellDescriptorForIndexPath(indexPath)
-        let cell = tableView.dequeueReusableCellWithIdentifier(currentCellDescriptor["cellIdentifier"] as! String, forIndexPath: indexPath) as! CustomCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: currentCellDescriptor["cellIdentifier"] as! String, for: indexPath) as! CustomCell
         
         if currentCellDescriptor["cellIdentifier"] as! String == "idCellNormal" {
-            cell.textNormalCell.text = array[indexPath.section]
-            cell.colorView.backgroundColor = UIColor.blueColor()
-            switch indexPath.section {
-            case 0:
-                cell.colorView.backgroundColor = UIColor(red:65/255.0, green: 181/255.0, blue: 255/255.0, alpha: 1.0)
-                return cell
-            case 1:
-                 cell.colorView.backgroundColor = UIColor(red:255/255.0, green: 198/255.0, blue: 81/255.0, alpha: 1.0)
-                return cell
-            case 2:
-                 cell.colorView.backgroundColor = UIColor(red:255/255.0, green: 221/255.0, blue: 117/255.0, alpha: 1.0)
-                return cell
-            case 3:
-                 cell.colorView.backgroundColor = UIColor(red:31/255.0, green: 225/255.0, blue: 133/255.0, alpha: 1.0)
-                return cell
-            case 4:
-                 cell.colorView.backgroundColor = UIColor(red:236/255.0, green: 135/255.0, blue: 255/255.0, alpha: 1.0)
-                return cell
-            case 5:
-                cell.colorView.backgroundColor = UIColor(red:255/255.0, green: 128/255.0, blue: 127/255.0, alpha: 1.0)
-                return cell
-            case 6:
-                 cell.colorView.backgroundColor = UIColor(red:157/255.0, green: 148/255.0, blue: 255/255.0, alpha: 1.0)
-                return cell
-            case 7:
-                 cell.colorView.backgroundColor = UIColor(red:181/255.0, green: 198/255.0, blue: 225/255.0, alpha: 1.0)
-                return cell
-            default:
-                return cell
-            }
-
-            
+            return cell.setupNormalCell(array[indexPath.section], indexPath: indexPath)
         }
-        
+            
         else if currentCellDescriptor["cellIdentifier"] as! String == "idCellValuePicker" {
-            switch indexPath.section {
-            case 0:
-                var array = self.section["general"]!
-                cell.textExpandCell.text = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:65/255.0, green: 181/255.0, blue: 255/255.0, alpha: 1.0)
-                return cell
-            case 1:
-                var array = self.section["business"]!
-                cell.textExpandCell.text  = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:255/255.0, green: 198/255.0, blue: 81/255.0, alpha: 1.0)
-                return cell
-            case 2:
-                var array = self.section["science-and-nature"]!
-                cell.textExpandCell.text = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:255/255.0, green: 221/255.0, blue: 117/255.0, alpha: 1.0)
-                return cell
-            case 3:
-                var array = self.section["sport"]!
-                cell.textExpandCell.text = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:31/255.0, green: 225/255.0, blue: 133/255.0, alpha: 1.0)
-                return cell
-            case 4:
-                var array = self.section["technology"]!
-                cell.textExpandCell.text = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:236/255.0, green: 135/255.0, blue: 255/255.0, alpha: 1.0)
-                return cell
-            case 5:
-                var array = self.section["music"]!
-                cell.textExpandCell.text = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:255/255.0, green: 128/255.0, blue: 127/255.0, alpha: 1.0)
-                return cell
-            case 6:
-                var array = self.section["gaming"]!
-                cell.textExpandCell.text = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:157/255.0, green: 148/255.0, blue: 255/255.0, alpha: 1.0)
-                return cell
-            case 7:
-                var array = self.section["entertainment"]!
-                cell.textExpandCell.text = array[indexPath.row - 1].name
-                cell.colorExpandView.backgroundColor = UIColor(red:181/255.0, green: 198/255.0, blue: 225/255.0, alpha: 1.0)
-                return cell
-            default:
-                return cell
-            }
+            return cell.setupValuePickerCell(array[indexPath.section], section: section, indexPath: indexPath)
         }
         return cell
     }
     
-
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexOfTappedRow = visibleRowsPerSection[indexPath.section][indexPath.row]
         if cellDescriptors[indexPath.section][indexOfTappedRow]["isExpandable"] as! Bool == true {
             var shouldExpandAndShowSubRows = false
@@ -137,43 +96,86 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
                 // In this case the cell should expand.
                 shouldExpandAndShowSubRows = true
             }
-            cellDescriptors[indexPath.section][indexOfTappedRow].setValue(shouldExpandAndShowSubRows, forKey: "isExpanded")
+            cellDescriptors[indexPath.section][indexOfTappedRow]["isExpanded"] = shouldExpandAndShowSubRows as AnyObject?
+            
             for i in (indexOfTappedRow + 1)...(indexOfTappedRow + (cellDescriptors[indexPath.section][indexOfTappedRow]["additionalRows"] as! Int)) {
-                cellDescriptors[indexPath.section][i].setValue(shouldExpandAndShowSubRows, forKey: "isVisible")
+                cellDescriptors[indexPath.section][i]["isVisible"] = shouldExpandAndShowSubRows as AnyObject?
+                
             }
+            
+            
         }
         if indexOfTappedRow != 0 {
-           self.performSegueWithIdentifier("PresentRandomViewController", sender: self)
+            self.performSegue(withIdentifier: "PresentRandomViewController", sender: self)
         }
         
         getIndicesOfVisibleRows()
-        tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
+        tableView.reloadSections(IndexSet(integer: indexPath.section), with: UITableViewRowAnimation.fade)
     }
     
-        
-    //Helper methods : 
+    //MARK: Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PresentRandomViewController" {
+            if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
+                let navigationController = segue.destination as! UINavigationController
+                let destVC = navigationController.viewControllers[0] as! PresentNewsViewController
+                switch selectedIndexPath.section {
+                case 0:
+                    var array = section["general"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                case 1:
+                    var array = section["business"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                case 2:
+                    var array = section["science-and-nature"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                case 3:
+                    var array = section["sport"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                case 4:
+                    var array = section["technology"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                case 5:
+                    var array = section["music"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                case 6:
+                    var array = section["gaming"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                case 7:
+                    var array = section["entertainment"]!
+                    destVC.source = array[selectedIndexPath.row].id
+                default:
+                    return
+                }
+            }
+            
+        }
+    }
+    
+    
+    //Helper methods :
     
     func configureTableView() {
-        tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.registerNib(UINib(nibName: "NormalCell", bundle: nil), forCellReuseIdentifier: "idCellNormal")
-        tableView.registerNib(UINib(nibName: "ValuePickerCell", bundle: nil), forCellReuseIdentifier: "idCellValuePicker")
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.register(UINib(nibName: "NormalCell", bundle: nil), forCellReuseIdentifier: "idCellNormal")
+        tableView.register(UINib(nibName: "ValuePickerCell", bundle: nil), forCellReuseIdentifier: "idCellValuePicker")
     }
-
+    
     
     func loadCellDescriptors() {
-        if let path = NSBundle.mainBundle().pathForResource("CellDescriptor", ofType: "plist") {
-            cellDescriptors = NSMutableArray(contentsOfFile: path)
+        if let path = Bundle.main.path(forResource: "CellDescriptor", ofType: "plist") {
+            cellDescriptors = NSArray(contentsOfFile: path) as! [[[String : AnyObject]]]
             getIndicesOfVisibleRows()
         }
     }
     
     func getIndicesOfVisibleRows() {
         visibleRowsPerSection.removeAll()
-        
         for currentSectionCells in cellDescriptors {
             var visibleRows = [Int]()
             
-            for row in 0...((currentSectionCells as! [[String: AnyObject]]).count - 1) {
+            for row in 0...((currentSectionCells ).count - 1) {
                 if currentSectionCells[row]["isVisible"] as! Bool == true {
                     visibleRows.append(row)
                 }
@@ -181,14 +183,17 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             visibleRowsPerSection.append(visibleRows)
         }
-       // print(visibleRowsPerSection)
+        print(visibleRowsPerSection)
+        
+        
     }
     
-    func getCellDescriptorForIndexPath(indexPath: NSIndexPath) -> [String: AnyObject] {
+    func getCellDescriptorForIndexPath(_ indexPath: IndexPath) -> [String: AnyObject] {
         let indexOfVisibleRow = visibleRowsPerSection[indexPath.section][indexPath.row]
-        let cellDescriptor = cellDescriptors[indexPath.section][indexOfVisibleRow] as! [String: AnyObject]
+        let cellDescriptor = self.cellDescriptors[indexPath.section][indexOfVisibleRow]
         return cellDescriptor
+        
     }
-
+    
 }
 

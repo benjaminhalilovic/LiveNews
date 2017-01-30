@@ -13,17 +13,17 @@ import UIKit
 class HKUtils: NSObject {
     
     class func isIOS8OrHigher() -> Bool {
-        let os_version = (UIDevice.currentDevice().systemVersion as NSString).floatValue
+        let os_version = (UIDevice.current.systemVersion as NSString).floatValue
         return ( os_version >= 8.000000)
     }
     
     class func isIOS7OrLower() -> Bool {
-        let os_version = (UIDevice.currentDevice().systemVersion as NSString).floatValue
+        let os_version = (UIDevice.current.systemVersion as NSString).floatValue
         return ( os_version < 8.000000)
     }
     
     class func appDisplayName() -> String? {
-        if let bundle = NSBundle.mainBundle().infoDictionary {
+        if let bundle = Bundle.main.infoDictionary {
             return bundle["CFBundleDisplayName"] as! String?
         }
         
@@ -32,22 +32,18 @@ class HKUtils: NSObject {
     
 }
 
-func closure_onmain(closure: () -> ()) {
-    if (NSThread.isMainThread()) {
+func closure_onmain(_ closure: () -> ()) {
+    if (Thread.isMainThread) {
         closure();
     }
     else {
-        dispatch_sync(dispatch_get_main_queue(), closure);
+        DispatchQueue.main.sync(execute: closure);
     }
 }
 
-func delay(delay:Double, closure:()->()) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        dispatch_get_main_queue(), closure)
+func delay(_ delay:Double, closure:@escaping ()->()) {
+    DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
 }
 
 

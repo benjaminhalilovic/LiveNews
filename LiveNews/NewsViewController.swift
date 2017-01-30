@@ -73,17 +73,17 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
         
         if let urlButton = self.view.viewWithTag(15) as? UIButton {
             if let url = article.url {
-                urlButton.setTitle(url, forState: UIControlState.Normal)
+                urlButton.setTitle(url, for: UIControlState())
                 urlButton.sizeToFit()
             }
         }
     }
     
     //MARK: fetching data
-    func getNews(source: String) {
+    func getNews(_ source: String) {
         LNAPICall.sharedInstance.getNews(source) {
             news in
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
+            OperationQueue.main.addOperation() {
                 self.dataSource = []
                 self.dataSource = news
                 print(self.dataSource.count)
@@ -95,25 +95,25 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
     
   //MARK: Open Safari
     
-    @IBAction func openUrl(sender: AnyObject) {
+    @IBAction func openUrl(_ sender: AnyObject) {
         if let url = article.url {
-            let url : NSURL = NSURL(string: url)!
-            if UIApplication.sharedApplication().canOpenURL(url) {
-                UIApplication.sharedApplication().openURL(url)
+            let url : URL = URL(string: url)!
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.openURL(url)
             }
         }
         
     }
     
     //MARK: Helper
-    func heightForView(label: UILabel){
+    func heightForView(_ label: UILabel){
         label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.sizeToFit()
     }
     
     
-    @IBAction func segmentControl(sender: AnyObject) {
+    @IBAction func segmentControl(_ sender: AnyObject) {
         let segmentControl : UISegmentedControl = sender as! UISegmentedControl
         let index = segmentControl.selectedSegmentIndex
         if index == 0 {
@@ -126,25 +126,25 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
     }
     
     //MARK: Table View datasource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath) as! LNNewsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath) as! LNNewsTableViewCell
         cell.setupCell(dataSource[indexPath.row])
         return cell        
     }
     
     //MARK: Table View delegate
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let article = dataSource[indexPath.row]
         LNAPICall.sharedInstance.fetchImageForArticle(article, source: article.source) {
             image, source in
-            NSOperationQueue.mainQueue().addOperationWithBlock(){
-                if let photoIndexRow = self.dataSource.indexOf(article) {
-                    let photoIndexPath = NSIndexPath(forRow: photoIndexRow, inSection: 0)
-                    if let cell = tableView.cellForRowAtIndexPath(photoIndexPath) as? LNNewsTableViewCell{
+            OperationQueue.main.addOperation(){
+                if let photoIndexRow = self.dataSource.index(of: article) {
+                    let photoIndexPath = IndexPath(row: photoIndexRow, section: 0)
+                    if let cell = tableView.cellForRow(at: photoIndexPath) as? LNNewsTableViewCell{
                         cell.updateWithImage(image)
                     }
                 }
@@ -152,10 +152,10 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.navigationController?.topViewController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let newsViewController = storyboard.instantiateViewControllerWithIdentifier("NewsViewController") as? NewsViewController {
+        if let newsViewController = storyboard.instantiateViewController(withIdentifier: "NewsViewController") as? NewsViewController {
                 newsViewController.article = dataSource[indexPath.row]
                 if var viewControllers = navigationController?.viewControllers {
                     viewControllers[viewControllers.count - 1] = newsViewController
