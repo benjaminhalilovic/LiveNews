@@ -11,14 +11,14 @@ import UIKit
 class LNSourceTemporary {
     let id: String
     let name: String
-    let descriptionSource: String
-    let url: String
-    let category: String
-    let country: String
-    let smallUrl: String
+    let descriptionSource: String?
+    let url: String?
+    let category: String?
+    let country: String?
+    let smallUrl: String?
     var image: UIImage?
     
-    init(id: String, name: String, description: String, url: String, category: String, country: String, smallURL: String) {
+    init(id: String, name: String, description: String?, url: String?, category: String?, country: String?, smallURL: String?) {
         self.id = id
         self.name = name
         self.descriptionSource = description

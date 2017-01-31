@@ -12,16 +12,20 @@ class PresentNewsViewController: UIViewController, UITableViewDataSource, UITabl
     fileprivate var dataSource = [LNNewsTemporary]()
     var source : String?
 
+
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureApperance()
-        getNews("cnbc")
+        if let source = source {
+            getNews(source)
+        }
     }
     
     func configureApperance() {
         self.automaticallyAdjustsScrollViewInsets = false
+        self.navigationController?.title = source
     }
 
     

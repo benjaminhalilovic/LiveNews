@@ -52,7 +52,7 @@
                             </scrollView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ima-Lo-exe">
                                 <rect key="frame" x="0.0" y="273" width="375" height="345"/>
-                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="d3g-Rs-ZQY">
                                     <size key="itemSize" width="313" height="329"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -103,7 +103,7 @@
                                                             <rect key="frame" x="0.0" y="28" width="313" height="100"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4h0-Zq-Cj3" id="MCz-n1-7bD">
-                                                                <rect key="frame" x="0.0" y="0.0" width="313" height="99"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="313" height="100"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6uk-xO-As5">
@@ -215,7 +215,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vUf-lA-De5" id="UKM-7d-SEP">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jgz-Ea-aVJ">
@@ -394,7 +394,7 @@
                                                                 <rect key="frame" x="0.0" y="28" width="359" height="70"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0lO-Uq-ObZ" id="rHk-x2-C6I">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="69"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="70"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UMf-T6-Naj">
@@ -560,7 +560,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9r9-s4-iFJ" id="pec-kG-IXq">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
@@ -643,6 +643,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="partialCurl" id="xso-ob-qJj" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="el7-vD-oGZ">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
@@ -700,7 +701,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pnB-BI-YBc" id="6Th-Ae-D7f">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9S9-xS-Hwk">
@@ -756,7 +757,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="C68-BD-mN8">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="L51-d5-QGO">
+                        <barButtonItem key="leftBarButtonItem" image="Back" id="L51-d5-QGO">
                             <connections>
                                 <action selector="backToMenu:" destination="M48-Bv-Wqh" id="fEy-qN-7zM"/>
                             </connections>
@@ -790,6 +791,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Back" width="48" height="48"/>
         <image name="Clock" width="30" height="30"/>
         <image name="Clock_selected" width="30" height="30"/>
         <image name="Flame" width="30" height="30"/>

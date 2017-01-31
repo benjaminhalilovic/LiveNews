@@ -22,7 +22,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var newsDataSource = [LNNewsTemporary]()
     var frame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    //var refreshControl : UIRefreshControl = UIRefreshControl()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         getSources()
-        getNews("cnbc")
+        getNews("bbc-news")
         
     }
     
@@ -50,7 +50,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         //Configure scrollView
         self.scrollView.contentSize = CGSize(width:self.view.frame.width * 4, height:self.scrollView.frame.height)
         self.scrollView.delegate = self
-        Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
         
         //ImageView Action
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped(_:)))
@@ -60,17 +60,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //MARK: Fetching data
     func getSources() {
         LNAPICall.sharedInstance.getSources(){
-            (sources: [LNSourceTemporary]) in
+            (newsResult: SourceResult) in
             OperationQueue.main.addOperation() {
-                self.createNSDictionary(sources){
-                    bool in
-                    LNSection.sharedInstance.section = self.section
-                    self.collectionView.reloadData()
+                switch newsResult {
+                case let .Success(sources):
+                    print("Successfully found sources \(sources.count)")
+                    print("Creating NSDictionary...")
+                    self.createNSDictionary(sources){
+                        bool in
+                        LNSection.sharedInstance.section = self.section
+                        self.collectionView.reloadData()
+                    }
+                case let .Failure(error):
+                    print("Error fetching recent photos: \(error) ")
                 }
             }
         }
     }
-    
+
     func getNews(_ source: String) {
         LNAPICall.sharedInstance.getNews(source) {
             news in
@@ -96,16 +103,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func createNSDictionary(_ sources: [LNSourceTemporary], onCompletion: (Bool) -> Void) {
         self.section.removeAll()
         for x in sources {
-            let currentCategory = x.category
-            if section[currentCategory] == nil {
-                let array = [LNSourceTemporary]()
-                section[currentCategory] = array
+            if let currentCategory = x.category {
+                if section[currentCategory] == nil {
+                    let array = [LNSourceTemporary]()
+                    section[currentCategory] = array
+                }
+                if var array = section[currentCategory] {
+                    array.append(x)
+                    //Looks like Apple considers this a "known issue" in Swift, implying it will work as expected eventually. From the Xcode 6 Beta 4 release notes:
+                    section[currentCategory] = array
+                }
             }
-            if var array = section[currentCategory] {
-                array.append(x)
-                //Looks like Apple considers this a "known issue" in Swift, implying it will work as expected eventually. From the Xcode 6 Beta 4 release notes:
-                section[currentCategory] = array
-            }
+            
         }
         onCompletion(true)
     }
@@ -152,18 +161,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     //MARK: Table View delegate
     func tableView(_ tableView: UITableView, collCell: LNSourceCollectionViewCell, willDisplayCell cell: LNSourceTableViewCell, forRowAtIndexPath indexPath: IndexPath) {
-        let category = collCell.title.text
-        let sourcesArray = self.section[category!]!
+        let category = collCell.title.text!
+        let sourcesArray = self.section[category]!
         let source = sourcesArray[indexPath.row]
-        LNAPICall.sharedInstance.fetchImageForSource(source, category: category!) {
-            image, category in
+        LNAPICall.sharedInstance.fetchImageForSource(source, category: category) {
+            imageResult in
             OperationQueue.main.addOperation(){
                 if let array = self.section[category] {
                     let photoIndex = array.index(of: source)
                     let photoIndexPath = IndexPath(row: photoIndex!,  section: 0)
-                    
                     if let cell = collCell.tableView.cellForRow(at: photoIndexPath) as? LNSourceTableViewCell{
-                        cell.img.image = image
+                        cell.img.image = source.image
                     }
                 }
             }
@@ -183,20 +191,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     
-    //MARK: Refresh Control
-    /*
-    func setupRefreshControl() {
-        self.refreshControl.tintColor = UIColor.blueColor()
-        self.refreshControl.addTarget(self, action: #selector(ViewController.refreshData), forControlEvents: UIControlEvents.ValueChanged)
-        self.collectionView.addSubview(self.refreshControl)
-    }
-    
-    func refreshData() {
-        print("Refresh data")
-        self.refreshControl.endRefreshing()
-    }
-    
-    */
+ 
     
     
    //MARK: Page Control

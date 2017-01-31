@@ -16,6 +16,8 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     var sources : [String] = []
     var fetchingData = false
     
+    //var refreshControl : UIRefreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureApperance()
@@ -179,7 +181,20 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
 
- 
+    //MARK: Refresh Control
+    /*
+     func setupRefreshControl() {
+     self.refreshControl.tintColor = UIColor.blueColor()
+     self.refreshControl.addTarget(self, action: #selector(ViewController.refreshData), forControlEvents: UIControlEvents.ValueChanged)
+     self.collectionView.addSubview(self.refreshControl)
+     }
+     
+     func refreshData() {
+     print("Refresh data")
+     self.refreshControl.endRefreshing()
+     }
+     
+     */
     
     //end
 }
