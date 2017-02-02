@@ -79,14 +79,11 @@ class LNSourceCollectionViewCell: UICollectionViewCell, UITableViewDataSource, U
     //Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfRows = dataSource?.tableView(tableView, cell: self, numberOfRowsInSection: section)
-        self.layoutIfNeeded()
         return numberOfRows!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       // print("Require for table view")
         return (dataSource?.tableView(tableView, cell: self, cellForRowAtIndexPath: indexPath))!
-        
     }
     
     //Delegate

@@ -81,25 +81,30 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
     
     //MARK: fetching data
     func getNews(_ source: String) {
+        LilithProgressHUD.show(view: tableView)
         LNAPICall.sharedInstance.getNews(source) {
-            news in
+            (newsResult: NewsResult) in
+            LilithProgressHUD.hide(view: self.tableView)
             OperationQueue.main.addOperation() {
-                self.dataSource = []
-                self.dataSource = news
-                print(self.dataSource.count)
-                self.tableView.reloadData()
+                switch newsResult {
+                case let .Success(news):
+                    self.dataSource.removeAll()
+                    self.dataSource = news
+                    self.tableView.reloadData()
+                case let .Failure(error):
+                    print("Error fetching recent photos: \(error) ")
+                }
             }
         }
     }
 
     
   //MARK: Open Safari
-    
     @IBAction func openUrl(_ sender: AnyObject) {
         if let url = article.url {
             let url : URL = URL(string: url)!
             if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
         
@@ -139,13 +144,13 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
     //MARK: Table View delegate
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let article = dataSource[indexPath.row]
-        LNAPICall.sharedInstance.fetchImageForArticle(article, source: article.source) {
-            image, source in
+        LNAPICall.sharedInstance.fetchImageForArticle(article) {
+            (imageResult: ImageResult) in
             OperationQueue.main.addOperation(){
                 if let photoIndexRow = self.dataSource.index(of: article) {
                     let photoIndexPath = IndexPath(row: photoIndexRow, section: 0)
                     if let cell = tableView.cellForRow(at: photoIndexPath) as? LNNewsTableViewCell{
-                        cell.updateWithImage(image)
+                        cell.updateWithImage(article.image)
                     }
                 }
             }
@@ -153,7 +158,6 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.navigationController?.topViewController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let newsViewController = storyboard.instantiateViewController(withIdentifier: "NewsViewController") as? NewsViewController {
                 newsViewController.article = dataSource[indexPath.row]

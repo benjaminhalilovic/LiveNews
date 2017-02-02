@@ -16,6 +16,10 @@
 		040F98321E02A65D00839C40 /* LNAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F98311E02A65D00839C40 /* LNAPIManager.swift */; };
 		040F98341E02AA7D00839C40 /* LNAPICall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F98331E02AA7D00839C40 /* LNAPICall.swift */; };
 		040F98391E02B71D00839C40 /* LNAPICall+Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F98381E02B71D00839C40 /* LNAPICall+Source.swift */; };
+		045E35941E41B9000005F082 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E35931E41B9000005F082 /* Reachability.swift */; };
+		045E35961E41C24E0005F082 /* LFProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E35951E41C24E0005F082 /* LFProgressHUD.swift */; };
+		045E359A1E4218B90005F082 /* Array+random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E35991E4218B90005F082 /* Array+random.swift */; };
+		045E359F1E4364240005F082 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E359E1E4364240005F082 /* InfoViewController.swift */; };
 		04CA87631E040E2100BF2FB9 /* LNSourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87621E040E2100BF2FB9 /* LNSourceTableViewCell.swift */; };
 		04CA87651E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA87641E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift */; };
 		04CA876D1E25343A00BF2FB9 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA876C1E25343A00BF2FB9 /* MenuController.swift */; };
@@ -47,6 +51,10 @@
 		040F98311E02A65D00839C40 /* LNAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNAPIManager.swift; sourceTree = "<group>"; };
 		040F98331E02AA7D00839C40 /* LNAPICall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNAPICall.swift; sourceTree = "<group>"; };
 		040F98381E02B71D00839C40 /* LNAPICall+Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LNAPICall+Source.swift"; sourceTree = "<group>"; };
+		045E35931E41B9000005F082 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		045E35951E41C24E0005F082 /* LFProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LFProgressHUD.swift; sourceTree = "<group>"; };
+		045E35991E4218B90005F082 /* Array+random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+random.swift"; sourceTree = "<group>"; };
+		045E359E1E4364240005F082 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		04CA87621E040E2100BF2FB9 /* LNSourceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNSourceTableViewCell.swift; sourceTree = "<group>"; };
 		04CA87641E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LNSourceCollectionViewCell.swift; sourceTree = "<group>"; };
 		04CA876C1E25343A00BF2FB9 /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -102,7 +110,7 @@
 				040F98251E029C3D00839C40 /* Services */,
 				040F98231E0299AD00839C40 /* Data */,
 				04CA875F1E03F2AD00BF2FB9 /* Helpers */,
-				04CA87601E040DE100BF2FB9 /* View */,
+				045E35971E41C28E0005F082 /* ActivityIndicator */,
 				04CA876B1E25337000BF2FB9 /* ViewControllers */,
 				040F98111E028CD100839C40 /* AppDelegate.swift */,
 				040F98151E028CD100839C40 /* Main.storyboard */,
@@ -170,28 +178,64 @@
 		043763C21E3F8E6700D0991F /* Menu View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04CA877B1E267C4200BF2FB9 /* Custom Table View Cell */,
 				04CA876C1E25343A00BF2FB9 /* MenuController.swift */,
 			);
 			name = "Menu View Controller";
+			sourceTree = "<group>";
+		};
+		045E35921E40D4BD0005F082 /* Home View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				04CA87611E040DF400BF2FB9 /* Cell */,
+				040F98131E028CD100839C40 /* ViewController.swift */,
+			);
+			name = "Home View Controller";
+			sourceTree = "<group>";
+		};
+		045E35971E41C28E0005F082 /* ActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				045E35951E41C24E0005F082 /* LFProgressHUD.swift */,
+			);
+			name = ActivityIndicator;
+			sourceTree = "<group>";
+		};
+		045E359B1E4354C90005F082 /* List News ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				04CA883D1E3256EF00BF2FB9 /* Random Table View Cell */,
+				04CA88481E3D27BE00BF2FB9 /* PresentNewsViewController.swift */,
+				04CA87841E27030600BF2FB9 /* RandomNewController.swift */,
+			);
+			name = "List News ViewControllers";
+			sourceTree = "<group>";
+		};
+		045E359C1E4354FF0005F082 /* News Table View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				04CA88431E37AE1400BF2FB9 /* News Table View Cell */,
+				04CA88401E35741C00BF2FB9 /* NewsViewController.swift */,
+			);
+			name = "News Table View Controller";
+			sourceTree = "<group>";
+		};
+		045E359D1E4362B40005F082 /* Info View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				045E359E1E4364240005F082 /* InfoViewController.swift */,
+			);
+			name = "Info View Controller";
 			sourceTree = "<group>";
 		};
 		04CA875F1E03F2AD00BF2FB9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				04CA87901E2F8B6600BF2FB9 /* HKUtils.swift */,
+				045E35931E41B9000005F082 /* Reachability.swift */,
+				045E35991E4218B90005F082 /* Array+random.swift */,
 			);
 			name = Helpers;
-			sourceTree = "<group>";
-		};
-		04CA87601E040DE100BF2FB9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				04CA88431E37AE1400BF2FB9 /* News Table View Cell */,
-				04CA883D1E3256EF00BF2FB9 /* Random Table View Cell */,
-				04CA877B1E267C4200BF2FB9 /* Custom Table View Cell */,
-				04CA87611E040DF400BF2FB9 /* Cell */,
-			);
-			name = View;
 			sourceTree = "<group>";
 		};
 		04CA87611E040DF400BF2FB9 /* Cell */ = {
@@ -207,10 +251,10 @@
 			isa = PBXGroup;
 			children = (
 				043763C21E3F8E6700D0991F /* Menu View Controller */,
-				04CA88481E3D27BE00BF2FB9 /* PresentNewsViewController.swift */,
-				040F98131E028CD100839C40 /* ViewController.swift */,
-				04CA87841E27030600BF2FB9 /* RandomNewController.swift */,
-				04CA88401E35741C00BF2FB9 /* NewsViewController.swift */,
+				045E35921E40D4BD0005F082 /* Home View Controller */,
+				045E359B1E4354C90005F082 /* List News ViewControllers */,
+				045E359C1E4354FF0005F082 /* News Table View Controller */,
+				045E359D1E4362B40005F082 /* Info View Controller */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -340,6 +384,7 @@
 				04CA883F1E32572900BF2FB9 /* LNRandomTabeViewCell.swift in Sources */,
 				04CA88411E35741C00BF2FB9 /* NewsViewController.swift in Sources */,
 				04CA87761E257A3F00BF2FB9 /* LNSection.swift in Sources */,
+				045E359A1E4218B90005F082 /* Array+random.swift in Sources */,
 				040F98391E02B71D00839C40 /* LNAPICall+Source.swift in Sources */,
 				04CA87881E298EAF00BF2FB9 /* LNAPICall+News.swift in Sources */,
 				04CA88451E37B1E000BF2FB9 /* LNNewsTableViewCell.swift in Sources */,
@@ -350,11 +395,14 @@
 				040F98341E02AA7D00839C40 /* LNAPICall.swift in Sources */,
 				04CA876D1E25343A00BF2FB9 /* MenuController.swift in Sources */,
 				04CA87911E2F8B6600BF2FB9 /* HKUtils.swift in Sources */,
+				045E35961E41C24E0005F082 /* LFProgressHUD.swift in Sources */,
+				045E35941E41B9000005F082 /* Reachability.swift in Sources */,
 				040F98141E028CD100839C40 /* ViewController.swift in Sources */,
 				040F98301E02A21500839C40 /* LNSource.swift in Sources */,
 				04CA87651E06A52C00BF2FB9 /* LNSourceCollectionViewCell.swift in Sources */,
 				040F98121E028CD100839C40 /* AppDelegate.swift in Sources */,
 				04CA87631E040E2100BF2FB9 /* LNSourceTableViewCell.swift in Sources */,
+				045E359F1E4364240005F082 /* InfoViewController.swift in Sources */,
 				04CA88491E3D27BE00BF2FB9 /* PresentNewsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,6 +520,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LiveNews/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhdevelopers.LiveNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -490,6 +539,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LiveNews/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhdevelopers.LiveNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";

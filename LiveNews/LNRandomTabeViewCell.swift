@@ -37,6 +37,18 @@ class LNRandomTabeViewCell: UITableViewCell {
     
     func setupCell(_ article: LNNewsTemporary, section: Int) {
         self.descript.text = article.desc
+        switch section {
+        case 0:
+            self.backgroundColor = UIColor(red:210/255.0, green: 253/255.0, blue: 255/255.0, alpha: 0.35)
+        case 1:
+            self.backgroundColor = UIColor(red:255/255.0, green: 227/255.0, blue: 230/255.0, alpha: 0.35)
+        case 2:
+            self.backgroundColor = UIColor(red:191/255.0, green: 255/255.0, blue: 147/255.0, alpha: 0.35)
+        case 3:
+            self.backgroundColor = UIColor(red:255/255.0, green: 205/255.0, blue: 205/255.0, alpha: 0.35)
+        default:
+            self.backgroundView?.tintColor = UIColor.white
+        }
         if  article.image == nil {
             self.img.image = UIImage(named: "Home")
             spinner.stopAnimating()

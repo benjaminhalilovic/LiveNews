@@ -111,19 +111,7 @@ extension LNAPICall {
             }
         }
     }
-    
-    func processImageRequest(_ data: Data?, error: Error?) -> ImageResult {
-        guard let imageData = data,
-            let image = UIImage(data: imageData) else {
-                // Couldn' t create an image
-                if data == nil {
-                    return .Failure(error!)
-                }else {
-                    return .Failure(PhotoError.ImageCreationError)
-                }
-        }
-        return .Success(image)
-    }
+   
     
     //end
 }

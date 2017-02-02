@@ -15,43 +15,38 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     var counter = 0
     var sources : [String] = []
     var fetchingData = false
+    var refreshControl : UIRefreshControl = UIRefreshControl()
     
-    //var refreshControl : UIRefreshControl = UIRefreshControl()
-    
+    let lastestSource = ["associated-press", "daily-mail", "sky-sports-news", "cnbc", "bbc-news", "daily-mail", "cnn", "bbc-sport", "google-news"  ]
+    let popularSource = ["sky-news", "the-new-york-times", "new-york-magazine", "buzzfeed", "cnbc", "bbc-news", "daily-mail"]
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         configureApperance()
-        if revealViewController() != nil {
-            menuButton.target = revealViewController()
-            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
+        setupRefreshControl()
         if let selectedTabIndex = tabBarController?.selectedIndex {
             switch selectedTabIndex {
-            case 0:
-                self.navigationItem.title = sources[counter]
-                fetchingData = true
-                tableView.tableFooterView = nil
-                getNews(sources[counter])
             case 1:
-                self.sources = ["associated-press", "daily-mail", "sky-sports-news", "cnbc"]
-                self.navigationItem.title = "Lastest news"
+                self.sources = lastestSource.choose(4)
                 getNews(sources[counter])
             case 2:
-                self.sources = ["sky-news", "the-new-york-times", "new-york-magazine", "buzzfeed"]
-                self.navigationItem.title = "Popular news"
+                self.sources = popularSource.choose(3)
                 getNews(sources[counter])
             default:
                 break
             }
-        } else {
-            self.tableView.tableFooterView = nil
-            getNews(sources[counter])
         }
     }
     
     func configureApperance() {
         self.automaticallyAdjustsScrollViewInsets = false
+        //Menu button
+        if revealViewController() != nil {
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
         //Footer of tableView
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 100))
         let pagingSpinner = UIActivityIndicatorView(frame: CGRect(x: footerView.frame.width/2, y: 40, width: 20.0, height: 20.0))
@@ -66,18 +61,22 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func getNews(_ source: String) {
         LNAPICall.sharedInstance.getNews(source) {
-            news in
+            (newsResult: NewsResult) in
             OperationQueue.main.addOperation() {
-                if self.dataSource[source] == nil {
-                    let array : [LNNewsTemporary] = news
-                    self.dataSource[source] = array
+                switch newsResult {
+                case let .Success(news):
+                    if self.dataSource[source] == nil {
+                        let array : [LNNewsTemporary] = news
+                        self.dataSource[source] = array
+                    }
+                    self.tableView.dataSource = self
+                    self.tableView.delegate = self
+                    self.tableView.reloadData()
+                    self.fetchingData = false
+                case let .Failure(error):
+                    print("Error fetching recent photos: \(error) ")
+                    self.tableView.tableFooterView = nil
                 }
-                for (key, value) in self.dataSource {
-                    //print(key)
-                   // print(value.count)
-                }
-                self.tableView.reloadData()
-                self.fetchingData = false
             }
         }
     }
@@ -91,8 +90,10 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
-        return self.dataSource[sources[section]]!.count
+        if let news = self.dataSource[sources[section]] {
+            return news.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -108,17 +109,15 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
         let source = sources[indexPath.section]
         if let news = dataSource[source] {
             let article = news[indexPath.row]
-            
-            LNAPICall.sharedInstance.fetchImageForArticle(article, source: source) {
-                image, source in
+            LNAPICall.sharedInstance.fetchImageForArticle(article) {
+                (imageResult: ImageResult) in
                 OperationQueue.main.addOperation(){
                     let news = self.dataSource[source]!
                     let photoIndexRow = news.index(of: article)
                     let photoIndexSection = self.sources.index(of: source)
                     let photoIndexPath = IndexPath(row: photoIndexRow!, section: photoIndexSection!)
-                    
                     if let cell = tableView.cellForRow(at: photoIndexPath) as? LNRandomTabeViewCell{
-                        cell.updateWithImage(image)
+                        cell.updateWithImage(article.image)
                     }
                 }
             }
@@ -126,7 +125,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "NewsVCfromLastesNews", sender: self)
+        self.performSegue(withIdentifier: "toNewsViewController", sender: self)
     }
     
     
@@ -169,7 +168,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NewsVCfromLastesNews" {
+        if segue.identifier == "toNewsViewController" {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 let source = sources[selectedIndexPath.section]
                 let news = self.dataSource[source]!
@@ -182,19 +181,21 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     //MARK: Refresh Control
-    /*
      func setupRefreshControl() {
-     self.refreshControl.tintColor = UIColor.blueColor()
-     self.refreshControl.addTarget(self, action: #selector(ViewController.refreshData), forControlEvents: UIControlEvents.ValueChanged)
-     self.collectionView.addSubview(self.refreshControl)
+        self.refreshControl.tintColor = UIColor.blue
+        self.refreshControl.addTarget(self, action: #selector(RandomNewController.refreshData), for: UIControlEvents.valueChanged)
+        self.tableView.addSubview(self.refreshControl)
      }
      
      func refreshData() {
-     print("Refresh data")
-     self.refreshControl.endRefreshing()
+        print("Refreshing")
+        self.refreshControl.endRefreshing()
+        counter = 0
+        tableView.dataSource = nil
+        tableView.delegate = nil
+        dataSource.removeAll()
+        getNews(sources[counter])
      }
-     
-     */
     
     //end
 }

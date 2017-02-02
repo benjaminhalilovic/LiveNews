@@ -11,8 +11,6 @@ import UIKit
 class PresentNewsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     fileprivate var dataSource = [LNNewsTemporary]()
     var source : String?
-
-
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -28,8 +26,6 @@ class PresentNewsViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController?.title = source
     }
 
-    
-    
     //MARK: data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
@@ -48,14 +44,14 @@ class PresentNewsViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let article = dataSource[indexPath.row]
-        LNAPICall.sharedInstance.fetchImageForArticle(article, source: article.source) {
-            image, source in
+        LNAPICall.sharedInstance.fetchImageForArticle(article) {
+            (imageResult: ImageResult) in
             OperationQueue.main.addOperation(){
                 let photoIndexRow = self.dataSource.index(of: article)
                 let photoIndexPath = IndexPath(row: photoIndexRow!, section: 0)
                 
                 if let cell = tableView.cellForRow(at: photoIndexPath) as? LNRandomTabeViewCell{
-                    cell.updateWithImage(image)
+                    cell.updateWithImage(article.image)
                 }
             }
         }
@@ -65,11 +61,16 @@ class PresentNewsViewController: UIViewController, UITableViewDataSource, UITabl
     //MARK: Fetching data
     func getNews(_ source: String) {
         LNAPICall.sharedInstance.getNews(source) {
-            news in
+            (newsResult: NewsResult) in
             OperationQueue.main.addOperation() {
-                self.dataSource += news
-                self.tableView.reloadData()
-
+                switch newsResult {
+                case let .Success(news):
+                    print("Successfully found news \(news.count)")
+                    self.dataSource += news
+                    self.tableView.reloadData()
+                case let .Failure(error):
+                    print("Error fetching recent photos: \(error) ")
+                }
             }
         }
     }

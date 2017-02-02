@@ -10,30 +10,20 @@ import UIKit
 
 class LNSourceTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
-    
     @IBOutlet weak var img: UIImageView!
-    
     fileprivate var indexPath: IndexPath?
-    
-   
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
-    
     
     func setupCell(_ indexPath: IndexPath, source: LNSourceTemporary) {
         self.indexPath = indexPath
-        //print("label value \(source.name)")
         self.name.text = source.name
     }
 }

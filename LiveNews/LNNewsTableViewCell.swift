@@ -37,5 +37,10 @@ class LNNewsTableViewCell: UITableViewCell {
     
     func setupCell(_ article: LNNewsTemporary) {
         titleLabel.text = article.title
+        if  article.image == nil {
+            self.img.image = UIImage(named: "Home")
+            spinner.stopAnimating()
+            spinner.hidesWhenStopped = true
+        }
     }
 }
