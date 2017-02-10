@@ -81,18 +81,27 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
     
     //MARK: fetching data
     func getNews(_ source: String) {
-        LilithProgressHUD.show(view: tableView)
         LNAPICall.sharedInstance.getNews(source) {
             (newsResult: NewsResult) in
-            LilithProgressHUD.hide(view: self.tableView)
             OperationQueue.main.addOperation() {
                 switch newsResult {
                 case let .Success(news):
                     self.dataSource.removeAll()
                     self.dataSource = news
+                    LilithProgressHUD.hide(view: self.tableView)
                     self.tableView.reloadData()
                 case let .Failure(error):
                     print("Error fetching recent photos: \(error) ")
+                    let alert = UIAlertController(title: "No Internet Connection or Server-side problem", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+
                 }
             }
         }
@@ -102,12 +111,24 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
   //MARK: Open Safari
     @IBAction func openUrl(_ sender: AnyObject) {
         if let url = article.url {
-            let url : URL = URL(string: url)!
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            if let url : URL = URL(string: url){
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
             }
         }
-        
+    }
+    
+    func verifyUrl (urlString: String?) -> Bool {
+        //Check for nil
+        if let urlString = urlString {
+            // create NSURL instance
+            if let url = URL(string: urlString) {
+                // check if your application can open the NSURL instance
+                return UIApplication.shared.canOpenURL(url)
+            }
+        }
+        return false
     }
     
     //MARK: Helper
@@ -119,6 +140,7 @@ class NewsViewController: UIViewController, UIScrollViewDelegate, UITableViewDat
     
     
     @IBAction func segmentControl(_ sender: AnyObject) {
+        LilithProgressHUD.show(view: tableView)
         let segmentControl : UISegmentedControl = sender as! UISegmentedControl
         let index = segmentControl.selectedSegmentIndex
         if index == 0 {

@@ -183,7 +183,7 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             visibleRowsPerSection.append(visibleRows)
         }
-        print(visibleRowsPerSection)
+       // print(visibleRowsPerSection)
         
         
     }

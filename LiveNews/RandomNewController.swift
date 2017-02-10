@@ -17,8 +17,8 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
     var fetchingData = false
     var refreshControl : UIRefreshControl = UIRefreshControl()
     
-    let lastestSource = ["associated-press", "daily-mail", "sky-sports-news", "cnbc", "bbc-news", "daily-mail", "cnn", "bbc-sport", "google-news"  ]
-    let popularSource = ["sky-news", "the-new-york-times", "new-york-magazine", "buzzfeed", "cnbc", "bbc-news", "daily-mail"]
+    let lastestSource = ["associated-press", "sky-sports-news", "new-york-magazine", "buzzfeed","bbc-sport", "google-news"  ]
+    let popularSource = ["sky-news", "the-new-york-times", "espn","cnn", "cnbc", "bbc-news", "daily-mail", "fox-sports"]
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.sources = lastestSource.choose(4)
                 getNews(sources[counter])
             case 2:
-                self.sources = popularSource.choose(3)
+                self.sources = popularSource.choose(4)
                 getNews(sources[counter])
             default:
                 break
@@ -76,6 +76,15 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
                 case let .Failure(error):
                     print("Error fetching recent photos: \(error) ")
                     self.tableView.tableFooterView = nil
+                    let alert = UIAlertController(title: "No Internet Connection or Server-side problem", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -195,7 +204,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.delegate = nil
         dataSource.removeAll()
         getNews(sources[counter])
-     }
+    }     
     
     //end
 }

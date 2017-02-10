@@ -76,7 +76,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     }
                 case let .Failure(error):
                     print("Error fetching recent source: \(error) ")
-                    let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: "No Internet Connection or Server-side problem", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
                     self.present(alert, animated: true, completion: nil)
                 }
             }

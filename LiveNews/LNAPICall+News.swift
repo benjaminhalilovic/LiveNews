@@ -75,6 +75,8 @@ extension LNAPICall {
         return LNNewsTemporary(source: source, author: author, title: title, urlToImage: urlToImage, publishedAt: publishedAt, url: url, description: description)
     }
     
+    
+    
     func fetchImageForArticle(_ news: LNNewsTemporary, completion: @escaping (ImageResult) -> Void) {
         if let image = news.image {
             completion(.Success(image))

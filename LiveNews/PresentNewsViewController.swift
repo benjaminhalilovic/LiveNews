@@ -10,7 +10,12 @@ import UIKit
 
 class PresentNewsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     fileprivate var dataSource = [LNNewsTemporary]()
-    var source : String?
+    var source : String? {
+        didSet {
+            self.navigationItem.title = source
+            self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Verdana", size: 20)!]
+        }
+    }
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -39,7 +44,9 @@ class PresentNewsViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: Table View delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let newsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewsViewController") as! NewsViewController
+        newsViewController.article = dataSource[indexPath.row]
+        self.show(newsViewController, sender: self)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -69,7 +76,16 @@ class PresentNewsViewController: UIViewController, UITableViewDataSource, UITabl
                     self.dataSource += news
                     self.tableView.reloadData()
                 case let .Failure(error):
-                    print("Error fetching recent photos: \(error) ")
+                    print("Error fetching recent source: \(error) ")
+                    let alert = UIAlertController(title: "No Internet Connection or Server-side problem", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
