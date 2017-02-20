@@ -77,7 +77,7 @@ class RandomNewController: UIViewController, UITableViewDataSource, UITableViewD
                     print("Error fetching recent photos: \(error) ")
                     self.tableView.tableFooterView = nil
                     let alert = UIAlertController(title: "No Internet Connection or Server-side problem", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         alert.dismiss(animated: true, completion: nil)
                     }))
                     alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in

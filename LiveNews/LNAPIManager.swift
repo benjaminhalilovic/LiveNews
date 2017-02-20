@@ -14,13 +14,16 @@ class LNAPIManager: NSObject {
     
     // MARK: Perform a GET Request
     func makeHTTPGetRequest(_ path: String, onCompletion: @escaping (_ data: Data?, _ error: Error?) -> Void) {
-        let request = URLRequest(url:URL(string: path)!)
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: request, completionHandler: {data, response, error -> Void in
-            onCompletion(data, error)
-        })
-        task.resume()
+        if let url = URL(string: path) {
+            let request = URLRequest(url: url)
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request, completionHandler: {data, response, error -> Void in
+                onCompletion(data, error)
+            })
+            task.resume()
+        }
     }
+        
 
 }

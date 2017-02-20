@@ -124,27 +124,35 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
                 case 0:
                     var array = section["general"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 case 1:
                     var array = section["business"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 case 2:
                     var array = section["science-and-nature"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 case 3:
                     var array = section["sport"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 case 4:
                     var array = section["technology"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 case 5:
                     var array = section["music"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 case 6:
                     var array = section["gaming"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 case 7:
                     var array = section["entertainment"]!
                     destVC.source = array[selectedIndexPath.row - 1].id
+                    destVC.sourceObject = array[selectedIndexPath.row - 1]
                 default:
                     return
                 }

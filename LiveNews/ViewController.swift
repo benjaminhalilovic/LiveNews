@@ -77,7 +77,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 case let .Failure(error):
                     print("Error fetching recent source: \(error) ")
                     let alert = UIAlertController(title: "No Internet Connection or Server-side problem", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         alert.dismiss(animated: true, completion: nil)
                     }))
                     alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
@@ -95,7 +95,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             (newsResult: NewsResult) in
             switch newsResult {
             case let .Success(news):
-                print("Successfully found news \(news.count)")
                 for article in news[0..<4] {
                     self.getImage(article: article)
                 }
@@ -215,6 +214,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             if let sourcesArray = self.section[category!] {
                 let source = sourcesArray[indexPath.row]
                 presentNewsVC.source = source.id
+                presentNewsVC.sourceObject = source
                 self.show(navController, sender: self)
             }
         }
